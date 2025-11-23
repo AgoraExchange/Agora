@@ -1,0 +1,804 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Agora Exchange — From Concept to Code</title>
+    <meta
+      name="description"
+      content="Agora Exchange is a cyber-focused build studio: custom websites, software, internal tools, automation, and security-minded scripts. From concept to code, we've got you covered."
+    />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="AgoraExchangeIcon.png" />
+
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div id="app-shell" class="app-shell">
+      <!-- ==============================
+           GLOBAL HEADER
+           ============================== -->
+      <header class="site-header">
+        <div class="header-inner">
+          <a href="#" class="brand" aria-label="Agora Exchange home" data-view="home">
+            <div class="brand-mark" aria-hidden="true">
+              <img src="AgoraExchangeIcon.png" alt="" class="brand-logo-image" />
+            </div>
+            <div class="brand-text">
+              <span class="brand-name">Agora Exchange</span>
+              <span class="brand-subline">Security · Engineering · Automation</span>
+            </div>
+          </a>
+
+          <button
+            class="nav-toggle"
+            type="button"
+            aria-label="Toggle navigation"
+            aria-expanded="false"
+            aria-controls="primary-nav"
+          >
+            <span class="nav-toggle-bar"></span>
+            <span class="nav-toggle-bar"></span>
+          </button>
+
+          <nav
+            id="primary-nav"
+            class="site-nav"
+            aria-label="Primary navigation"
+          >
+            <ul class="nav-list">
+              <li>
+                <button
+                  class="nav-link is-active"
+                  type="button"
+                  data-view="home"
+                >
+                  Home
+                </button>
+              </li>
+              <li>
+                <button class="nav-link" type="button" data-view="who">
+                  Who We Are
+                </button>
+              </li>
+              <li>
+                <button class="nav-link" type="button" data-view="solutions">
+                  Services
+                </button>
+              </li>
+              <li>
+                <button class="nav-link" type="button" data-view="products">
+                  Packages
+                </button>
+              </li>
+              <li>
+                <button class="nav-link" type="button" data-view="learn">
+                  Learn
+                </button>
+              </li>
+              <li>
+                <button class="nav-link" type="button" data-view="contact">
+                  Contact
+                </button>
+              </li>
+            </ul>
+
+            <button
+              class="nav-cta"
+              type="button"
+              data-view="contact"
+            >
+              Engage Agora
+            </button>
+          </nav>
+        </div>
+      </header>
+
+      <!-- ==============================
+           MAIN CONTENT / VIEWS
+           ============================== -->
+      <main class="site-main">
+        <!-- ========= VIEW: HOME / LANDING ========= -->
+        <section
+          class="view view-home is-active"
+          data-view="home"
+          aria-label="Agora Exchange overview"
+        >
+          <div class="view-inner hero-layout">
+            <div class="hero-main">
+              <p class="hero-kicker">Your idea, our engineering.</p>
+
+              <h1 class="hero-title">
+                From concept to code, we engineer
+                <span class="hero-highlight">custom websites, tools,</span>
+                and
+                <span class="hero-highlight">scripts built to match your vision</span>
+                — down to the last detail.
+              </h1>
+
+              <p class="hero-body">
+                Browse our custom-tailored websites, dashboards, tools, and
+                software solutions — each designed to fit your profession,
+                workflow, and vision. Whether you’re a creator, a business
+                owner, or an operator running missions behind the scenes,
+                Agora delivers builds that feel modern, intentional, and
+                native.
+              </p>
+
+              <p class="hero-body">
+                Can’t find exactly what you’re looking for?  
+                Send us your concept, and we’ll turn it into code. From custom
+                websites and automation to Python utilities, internal systems,
+                and security-minded research tooling under legal scopes — Agora
+                is where “I wish this existed” becomes something you can click
+                on and use.
+              </p>
+
+              <div class="hero-actions">
+                <button
+                  class="btn btn-primary"
+                  type="button"
+                  data-view="products"
+                >
+                  Browse
+                </button>
+
+                <button
+                  class="btn btn-ghost"
+                  type="button"
+                  data-view="contact"
+                >
+                  Contact
+                </button>
+              </div>
+
+              <div class="hero-meta">
+                <div class="hero-stat">
+                  <span class="hero-stat-label">Custom builds delivered</span>
+                  <span class="hero-stat-value">2,740+</span>
+                </div>
+                <div class="hero-stat">
+                  <span class="hero-stat-label">Solutions created</span>
+                  <span class="hero-stat-value">Web · Tools · Scripts</span>
+                </div>
+                <div class="hero-stat">
+                  <span class="hero-stat-label">Clients supported</span>
+                  <span class="hero-stat-value">Creators · Teams · Ops</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="hero-aside">
+              <div class="hero-panel hero-panel-primary">
+                <h2 class="panel-title">How Agora builds your vision</h2>
+                <p class="panel-body">
+                  Every project at Agora is engineered with the same disciplined process:
+                  research-backed planning, security-forward design, and clean, maintainable
+                  code that scales with you. No shortcuts, no recycled templates — just
+                  purposeful architecture built to last.
+                </p>
+                <ul class="panel-list">
+                  <li>Discovery & mapping sessions tailored to your idea</li>
+                  <li>Security-focused design philosophy from day one</li>
+                  <li>Custom architecture—not plug-ins, not drag-and-drop builders</li>
+                  <li>Continuous refinement as your vision evolves</li>
+                </ul>
+              </div>
+
+              <div class="hero-panel hero-panel-secondary">
+                <div class="signal-row">
+                  <span class="signal-dot"></span>
+                  <span class="signal-label">Your idea → engineered with intent.</span>
+                </div>
+                <p class="panel-body">
+                  Whether you need a client-facing site, a behind-the-scenes
+                  console, or a technical solution nobody else will build,
+                  Agora is the bridge between “just an idea” and something
+                  robust enough to rely on.
+                </p>
+                <button
+                  class="link-inline"
+                  type="button"
+                  data-view="who"
+                >
+                  Learn more about what we do
+                </button>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ========= VIEW: WHO WE ARE ========= -->
+        <section
+          class="view view-who"
+          data-view="who"
+          aria-label="Who we are"
+          hidden
+        >
+          <div class="view-inner">
+            <header class="view-header">
+              <p class="view-kicker">Who we are</p>
+              <h2 class="view-title">A studio built by cybersecurity specialist.</h2>
+
+              <p class="view-subtitle">
+                Agora Exchange grew from the original Tornet Market — a small group of
+                security-minded developers and investigators who loved creating clean,
+                efficient tools. Today, that same mindset powers polished, reliable
+                builds trusted by a growing base of returning clients.
+              </p>
+            </header>
+
+            <div class="grid-two-column">
+              <article class="card">
+                <h3 class="card-title">Our white hat engineers</h3>
+                <p class="card-body">
+                  Agora is powered by programmers who work in cybersecurity across the
+                  Silicon Valley — defending systems by day, building for Agora by
+                  choice. This is where they brainstorm, design from scratch, and write
+                  code with the freedom and detail that senior full-stack engineers are
+                  known for.
+                </p>
+                <p class="card-body">
+                  The result: clean architecture, intentional design, and products that
+                  feel like they were built by people who actually enjoy building.
+                </p>
+              </article>
+
+              <article class="card">
+                <h3 class="card-title">Tornet legacy, Agora refinement</h3>
+                <p class="card-body">
+                  Tornet taught us how to think fast, experiment, and ship tools that
+                  work under pressure. Agora is that same engineering — polished,
+                  documented, and client-ready.
+                </p>
+                <p class="card-body">
+                  We’ve worked alongside ecosystems involving Splunk, Cisco, Apple, and
+                  Palo Alto Networks. That experience now shapes the way we design
+                  websites, consoles, automations, and script kits for our clients.
+                </p>
+                <ul class="card-list">
+                  <li>Strong relationships with returning customers</li>
+                  <li>Experience in real-world, high-stakes environments</li>
+                  <li>Builds meant to last, not quick throwaway tools</li>
+                </ul>
+              </article>
+            </div>
+
+            <section class="section-inline">
+              <h3 class="section-title">How we work</h3>
+              <div class="pill-row">
+                <div class="pill">
+                  <span class="pill-label">Listen</span>
+                  <span class="pill-text">We learn what you're really trying to build.</span>
+                </div>
+                <div class="pill">
+                  <span class="pill-label">Architect</span>
+                  <span class="pill-text">We map flows and structure accordingly.</span>
+                </div>
+                <div class="pill">
+                  <span class="pill-label">Build</span>
+                  <span class="pill-text">We write clean, modular code from scratch.</span>
+                </div>
+                <div class="pill">
+                  <span class="pill-label">Refine</span>
+                  <span class="pill-text">We adjust as your vision or needs evolve.</span>
+                </div>
+              </div>
+            </section>
+          </div>
+        </section>
+
+        <!-- ========= VIEW: SERVICES / SOLUTIONS ========= -->
+        <section
+          class="view view-solutions"
+          data-view="solutions"
+          aria-label="Services and capabilities"
+          hidden
+        >
+          <div class="view-inner">
+            <header class="view-header">
+              <p class="view-kicker">Services</p>
+              <h2 class="view-title">Cyber-focused builds, from UI to low-level scripts.</h2>
+              <p class="view-subtitle">
+                Agora’s lane is clear: we build things for people who care about
+                security. That can be a public-facing site, an internal tool, or a
+                script quietly doing work inside your environment — all under
+                proper, legal scopes.
+              </p>
+            </header>
+
+            <div class="grid-three-column">
+              <article class="card">
+                <h3 class="card-title">Custom Cyber-Themed Websites</h3>
+                <p class="card-body">
+                  High-end websites that feel like they came from a security studio,
+                  not a generic template. Perfect for cyber brands, labs, security
+                  teams, and individuals with a hacker aesthetic.
+                </p>
+                <ul class="card-list">
+                  <li>Portfolio & personal “operator” sites</li>
+                  <li>Landing pages for tools, labs, and products</li>
+                  <li>Multi-page company sites with a cyber look</li>
+                </ul>
+              </article>
+
+              <article class="card">
+                <h3 class="card-title">Internal Tools, Dashboards & Consoles</h3>
+                <p class="card-body">
+                  Browser-based consoles for investigations, audit, monitoring, or
+                  ops. Interfaces that feel like a control panel, not a spreadsheet
+                  wearing lipstick.
+                </p>
+                <ul class="card-list">
+                  <li>Case management & investigation views</li>
+                  <li>Operational dashboards & status boards</li>
+                  <li>Access-aware panels for different roles</li>
+                </ul>
+              </article>
+
+              <article class="card">
+                <h3 class="card-title">Scripts, Automation & Security Utilities</h3>
+                <p class="card-body">
+                  Light-weight tooling, helpers, and automation that plug into your
+                  environment. Think log wranglers, enrichment helpers, and scoped
+                  offensive security scripts for testing.
+                </p>
+                <ul class="card-list">
+                  <li>Custom automation & helper scripts</li>
+                  <li>Red-team style utilities within allowed scopes</li>
+                  <li>Prototype research tools & proof-of-concept code</li>
+                </ul>
+              </article>
+
+              <article class="card">
+                <h3 class="card-title">Pentesting & Hacking</h3>
+                <p class="card-body">
+                  A legal, controlled way to see how your environment stands up against real
+                  attacker tactics. We can simulate targeted intrusion attempts, surface weak
+                  points, and help you reinforce defenses — all within clearly defined scope.
+                </p>
+                <ul class="card-list">
+                  <li>Recon, enumeration & attack-path mapping</li>
+                  <li>Controlled exploitation attempts (legal scope)</li>
+                  <li>Hardening plans tailored to your stack</li>
+                </ul>
+              </article>
+
+              <!-- NEW: Defensive suite / VPN-on-steroids style service -->
+              <article class="card">
+                <h3 class="card-title">Defensive Suite & Network Shield</h3>
+                <p class="card-body">
+                  An all-in-one defensive layer designed to keep your traffic, devices,
+                  and accounts harder to reach. Think hardened VPN-style tunneling, safer
+                  DNS, and policy-driven controls — all wrapped in interfaces you’ll
+                  actually use.
+                </p>
+                <ul class="card-list">
+                  <li>Secure traffic tunneling & encrypted routing concepts</li>
+                  <li>Hardened configurations and safe defaults for your stack</li>
+                  <li>Dashboards and controls tailored to your environment</li>
+                </ul>
+              </article>
+
+              <!-- NEW: Custom AI assistant service -->
+              <article class="card">
+                <h3 class="card-title">Custom AI Security Assistant</h3>
+                <p class="card-body">
+                  A private, tailored AI assistant that understands your tools, logs,
+                  and workflows. Like a security-focused copilot that helps you reason
+                  through incidents, patterns, and ideas without exposing your data to
+                  random platforms.
+                </p>
+                <ul class="card-list">
+                  <li>Custom prompts & behavior tuned to your environment</li>
+                  <li>Context-aware help for workflows, playbooks, and scenarios</li>
+                  <li>Designed to respect privacy, scope, and data boundaries</li>
+                </ul>
+              </article>
+
+              <!-- NEW: Client training / workshops -->
+              <article class="card">
+                <h3 class="card-title">Client Training & Security Workshops</h3>
+                <p class="card-body">
+                  Ongoing security isn’t just tools — it’s people. Agora helps teams
+                  understand how attackers move, how to spot bad signals, and how to
+                  respond calmly when something looks off.
+                </p>
+                <ul class="card-list">
+                  <li>Phishing, social engineering & awareness sessions</li>
+                  <li>Playbook-style run-throughs for incidents and response</li>
+                  <li>Hands-on workshops tailored to your stack & risk level</li>
+                </ul>
+              </article>
+            </div>
+
+            <div class="cta-row">
+              <button
+                class="btn btn-primary"
+                type="button"
+                data-view="products"
+              >
+                See cyber-flavored packages
+              </button>
+              <button
+                class="btn btn-ghost"
+                type="button"
+                data-view="contact"
+              >
+                Discuss a specific idea
+              </button>
+            </div>
+          </div>
+        </section>
+
+        <!-- ========= VIEW: PRODUCTS / PACKAGES ========= -->
+        <section
+          class="view view-products"
+          data-view="products"
+          aria-label="Agora project packages"
+          hidden
+        >
+          <div class="view-inner">
+            <header class="view-header">
+              <p class="view-kicker">Packages</p>
+              <h2 class="view-title">Choose a lane. We’ll wire it like an ops board.</h2>
+              <p class="view-subtitle">
+                These packages are starting points — every engagement ends up
+                tailored. Whether you’re after a cyber-styled front end, an internal
+                console, or scoped security tooling, Agora builds it with that
+                modern “operator UI” feel.
+              </p>
+            </header>
+
+            <div class="grid-three-column">
+              <article class="card product-card">
+                <h3 class="card-title">Cyber Landing / Portfolio</h3>
+                <p class="card-body">
+                  A sharp, custom one-page or light multi-section site. Perfect for
+                  security professionals, studios, labs, and brands that want to
+                  look like they live inside terminals and dashboards.
+                </p>
+                <ul class="card-list">
+                  <li>Custom design, no recycled templates</li>
+                  <li>Responsive, fast, and minimal bloat</li>
+                  <li>Contact, case, or inquiry capture ready</li>
+                </ul>
+                <button class="btn btn-secondary" type="button" data-view="contact">
+                  Book a Cyber Landing
+                </button>
+              </article>
+
+              <article class="card product-card">
+                <h3 class="card-title">Ops Console / Web App</h3>
+                <p class="card-body">
+                  A multi-view web app or console that feels like a real operations
+                  cockpit. For investigations, monitoring, client management, or
+                  custom workflows you can’t buy off-the-shelf.
+                </p>
+                <ul class="card-list">
+                  <li>Role-based panels & views</li>
+                  <li>Filter, search, and log-friendly layouts</li>
+                  <li>API integration & auth-ready structure</li>
+                </ul>
+                <button class="btn btn-secondary" type="button" data-view="contact">
+                  Scope an Ops Console
+                </button>
+              </article>
+
+              <article class="card product-card">
+                <h3 class="card-title">Script & Automation Kit</h3>
+                <p class="card-body">
+                  A focused set of scripts and small utilities built for your
+                  environment and policies. Think enrichment bots, zero day scripts, log wranglers,
+                  and scoped offensive-style test utilities.
+                </p>
+                <ul class="card-list">
+                  <li>Custom scripts aligned with your stack</li>
+                  <li>Runbooks & usage documentation included</li>
+                  <li>Built with strict respect for legal scopes</li>
+                </ul>
+                <button class="btn btn-secondary" type="button" data-view="contact">
+                  Design a Script Kit
+                </button>
+              </article>
+
+              <article class="card product-card">
+                <h3 class="card-title">Red Team Simulation</h3>
+                <p class="card-body">
+                  A controlled, legal simulation of attacker behavior designed to test how
+                  your people, systems, and processes hold up against real-world tactics.
+                  This is the closest you can get to “thinking like the adversary” while
+                  staying fully within defined scope and policy.
+                </p>
+                <ul class="card-list">
+                  <li>Recon, surface mapping & attack-path discovery</li>
+                  <li>Controlled exploitation attempts</li>
+                  <li>Operational hardening plan based on real findings</li>
+                </ul>
+                <button class="btn btn-secondary" type="button" data-view="contact">
+                  Hire Hacker
+                </button>
+              </article>
+            </div>
+          </div>
+        </section>
+
+        <!-- ========= VIEW: LEARN ========= -->
+        <section
+          class="view view-learn"
+          data-view="learn"
+          aria-label="Learn with Agora"
+          hidden
+        >
+          <div class="view-inner">
+            <header class="view-header">
+              <p class="view-kicker">Learn</p>
+              <h2 class="view-title">Make sense of cyber, without drowning in jargon.</h2>
+              <p class="view-subtitle">
+                Agora breaks down how security-focused builds actually work — from
+                websites and dashboards to scripts, automation, and controlled
+                offensive security testing.
+              </p>
+            </header>
+
+            <div class="grid-three-column">
+              <article class="card">
+                <h3 class="card-title">Designing for a cyber aesthetic</h3>
+                <p class="card-body">
+                  We explain what makes a site or console feel “cyber” without
+                  turning it into unread neon chaos. Structure, typography, contrast,
+                  and motion — all tuned for operators and normal humans.
+                </p>
+                <ul class="card-list">
+                  <li>Balancing readability with hacker vibes</li>
+                  <li>Using panels, grids, and signals the right way</li>
+                  <li>Keeping it fast while it looks advanced</li>
+                </ul>
+              </article>
+
+              <article class="card">
+                <h3 class="card-title">Scripts, tools & zero-day mindset</h3>
+                <p class="card-body">
+                  We walk through how scripts and tools are used in security work:
+                  hunting bugs, probing surfaces, and automating boring actions —
+                  always inside defined rules and scopes.
+                </p>
+                <ul class="card-list">
+                  <li>How research and PoC tooling fits into security</li>
+                  <li>Why “zero-day thinking” matters for defense</li>
+                  <li>Where ethics, law, and creativity intersect</li>
+                </ul>
+              </article>
+
+              <article class="card">
+                <h3 class="card-title">Aligning builds with your threat model</h3>
+                <p class="card-body">
+                  Not every project needs the same level of paranoia. We help you
+                  match your budget and risk profile with tech decisions that make
+                  sense for where you are right now.
+                </p>
+                <ul class="card-list">
+                  <li>Basic vs advanced protections explained</li>
+                  <li>What to prioritize in phase one</li>
+                  <li>How to roadmap future security steps</li>
+                </ul>
+              </article>
+            </div>
+
+            <div class="cta-row">
+              <button
+                class="btn btn-primary"
+                type="button"
+                data-view="contact"
+              >
+                Ask Agora about your stack
+              </button>
+            </div>
+          </div>
+        </section>
+
+        <!-- ========= VIEW: CONTACT ========= -->
+        <section
+          class="view view-contact"
+          data-view="contact"
+          aria-label="Contact Agora Exchange"
+          hidden
+        >
+          <div class="view-inner contact-layout">
+            <header class="view-header">
+              <p class="view-kicker">Contact</p>
+              <h2 class="view-title">Tell us what you’re trying to build or secure.</h2>
+              <p class="view-subtitle">
+                Whether you’re thinking about a cyber-styled website, an internal
+                console, a script kit, or a mix of all three — drop the context.
+                We’ll respond with a realistic direction and next steps.
+              </p>
+            </header>
+
+            <div class="contact-grid">
+              <form class="contact-form" novalidate>
+                <div class="form-row">
+                  <label for="contact-name">Name</label>
+                  <input
+                    id="contact-name"
+                    name="name"
+                    type="text"
+                    autocomplete="name"
+                    placeholder="Your name"
+                    required
+                  />
+                </div>
+
+                <div class="form-row">
+                  <label for="contact-email">Email</label>
+                  <input
+                    id="contact-email"
+                    name="email"
+                    type="email"
+                    autocomplete="email"
+                    placeholder="you@mail.com"
+                    required
+                  />
+                </div>
+
+                <div class="form-row">
+                  <label for="contact-org">Team / Brand / Project</label>
+                  <input
+                    id="contact-org"
+                    name="organization"
+                    type="text"
+                    placeholder="Security team, brand, or project name"
+                  />
+                </div>
+
+                <div class="form-row form-row-inline">
+                  <div class="form-field">
+                    <label for="contact-focus">What do you need?</label>
+                    <select id="contact-focus" name="focus">
+                      <option value="">Select an option</option>
+                      <option value="cyber-landing">
+                        Cyber-styled website / portfolio
+                      </option>
+                      <option value="ops-console">
+                        Internal console / web app
+                      </option>
+                      <option value="script-kit">
+                        Script & automation kit (legal scope)
+                      </option>
+                      <option value="other">Not sure / something else</option>
+                    </select>
+                  </div>
+
+                  <div class="form-field">
+                    <label for="contact-budget">Rough budget</label>
+                    <select id="contact-budget" name="budget">
+                      <option value="">No preference</option>
+                      <option value="under-5k">Under $100</option>
+                      <option value="5k-25k">$100 – $350</option>
+                      <option value="25k-100k">$500 – $1,000</option>
+                      <option value="100k-plus">$1,000+</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div class="form-row">
+                  <label for="contact-message">What’s the mission?</label>
+                  <textarea
+                    id="contact-message"
+                    name="message"
+                    rows="5"
+                    placeholder="Explain your idea, who will use it, and any tools or links we should know. Precision helps our engineers start in the right direction."
+                  ></textarea>
+                </div>
+
+                <button class="btn btn-primary" type="submit">
+                  Submit to Agora
+                </button>
+
+                <p class="form-footnote">
+                  Your submission helps us scope the work. All builds and services require 
+                  payment once the project details are agreed on.
+                </p>
+              </form>
+
+              <aside class="contact-aside">
+                <div class="card">
+                  <h3 class="card-title">How Agora handles inbound requests</h3>
+                  <p class="card-body">
+                    Each request is reviewed by someone who actually builds things.
+                    We map what you’re asking for against risk, timelines, and the
+                    kind of work we do best.
+                  </p>
+                  <ul class="card-list">
+                    <li>We respond with questions, ideas, and options.</li>
+                    <li>No spammy sequences or endless follow-ups.</li>
+                    <li>
+                      If your ask is outside our lane, we’ll say so clearly.
+                    </li>
+                  </ul>
+                </div>
+              </aside>
+            </div>
+          </div>
+        </section>
+      </main>
+
+      <!-- ==============================
+           GLOBAL FOOTER
+           ============================== -->
+      <footer class="site-footer">
+        <div class="footer-inner">
+          <div class="footer-col footer-brand">
+            <div class="footer-text">
+              <p class="footer-title">Agora Exchange</p>
+              <p class="footer-body">
+                A cyber-first studio for custom websites, tools, and scripts —
+                carrying Tornet’s mindset into a clean, public, client-ready form.
+              </p>
+            </div>
+          </div>
+
+          <div class="footer-col footer-links">
+            <p class="footer-heading">Company</p>
+            <button class="footer-link" type="button" data-view="who">
+              About
+            </button>
+            <button class="footer-link" type="button" data-view="solutions">
+              Services
+            </button>
+            <button class="footer-link" type="button" data-view="products">
+              Packages
+            </button>
+            <button class="footer-link" type="button" data-view="learn">
+              Learn
+            </button>
+          </div>
+
+          <div class="footer-col footer-links">
+            <p class="footer-heading">Work with Agora</p>
+            <button class="footer-link" type="button" data-view="contact">
+              Contact
+            </button>
+            <button class="footer-link" type="button" data-view="contact">
+              Start a project brief
+            </button>
+          </div>
+
+          <div class="footer-col footer-meta">
+            <p class="footer-heading">Signal, not noise.</p>
+            <p class="footer-body">
+              Occasional notes from the intersection of cyber, design, and custom
+              tooling — written for people who actually ship things.
+            </p>
+            <form class="footer-form" novalidate>
+              <label class="visually-hidden" for="footer-email">
+              </label>
+              <input
+                id="footer-email"
+                type="email"
+                placeholder="you@mail.com"
+                autocomplete="email"
+              />
+              <button class="btn btn-secondary" type="submit">
+                Get updates
+              </button>
+            </form>
+          </div>
+        </div>
+
+        <div class="footer-bottom">
+          <p class="footer-copy">
+            © <span id="footer-year"></span> Agora Exchange. All rights reserved.
+          </p>
+          <div class="footer-bottom-links">
+            <a href="#" class="footer-bottom-link">Privacy</a>
+            <a href="#" class="footer-bottom-link">Terms</a>
+          </div>
+        </div>
+      </footer>
+    </div>
+
+    <script src="script.js" defer></script>
+  </body>
+</html>
