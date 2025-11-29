@@ -984,3 +984,394 @@ textarea {
   margin-top: 1.75rem; /* EXTRA breathing room above button */
   align-self: flex-start;
 }
+
+/* =========================================
+   GALLERY / SHOWCASE
+   ========================================= */
+
+.view-gallery .view-inner {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.gallery-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-bottom: 1.75rem;
+}
+
+.filter-btn {
+  border-radius: 999px;
+  border: 1px solid rgba(148, 163, 184, 0.6);
+  background: transparent;
+  color: #e5e7eb;
+  padding: 0.4rem 0.9rem;
+  font-size: 0.8rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition:
+    background 0.18s ease,
+    color 0.18s ease,
+    border-color 0.18s ease,
+    transform 0.12s ease;
+}
+
+.filter-btn.is-active {
+  background: radial-gradient(circle at top left, #4f46e5, #020617);
+  border-color: #4f46e5;
+  transform: translateY(-1px);
+}
+
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1.75rem;
+}
+
+.gallery-item {
+  background: radial-gradient(
+      circle at top left,
+      rgba(148, 163, 184, 0.12),
+      rgba(15, 23, 42, 0.98)
+    );
+  border-radius: 1rem;
+  border: 1px solid rgba(148, 163, 184, 0.28);
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  box-shadow: 0 18px 45px rgba(15, 23, 42, 0.75);
+  transition:
+    transform 0.18s ease,
+    box-shadow 0.18s ease,
+    border-color 0.18s ease;
+}
+
+.gallery-item:hover {
+  transform: translateY(-4px);
+  border-color: rgba(129, 140, 248, 0.9);
+  box-shadow: 0 26px 65px rgba(15, 23, 42, 0.95);
+}
+
+.gallery-item.is-hidden {
+  display: none;
+}
+
+.gallery-figure {
+  overflow: hidden;
+  border-radius: 0.85rem;
+  aspect-ratio: 16 / 9;
+  background: radial-gradient(circle at center, #020617, #000);
+}
+
+.gallery-figure img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.gallery-title {
+  font-size: 0.95rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #e5e7eb;
+}
+
+.gallery-desc {
+  font-size: 0.85rem;
+  color: #9ca3af;
+  line-height: 1.5;
+}
+
+@media (max-width: 640px) {
+  .gallery-filters {
+    gap: 0.5rem;
+  }
+
+  .filter-btn {
+    font-size: 0.75rem;
+    padding: 0.3rem 0.7rem;
+  }
+}
+
+/* ==============================
+   Hades Toast / Agora Signal
+   ============================== */
+
+.hades-toast {
+  position: fixed;
+  right: 1.5rem;
+  bottom: 1.75rem;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  max-width: 420px;
+  padding: 0.9rem 1rem;
+  background: rgba(4, 12, 28, 0.96);
+  border-radius: 0.9rem;
+  border: 1px solid rgba(100, 255, 218, 0.3);
+  box-shadow: 0 18px 45px rgba(0, 0, 0, 0.75);
+  transform: translateX(130%);
+  opacity: 0;
+  pointer-events: none;
+  z-index: 999;
+  transition:
+    transform 420ms cubic-bezier(0.2, 0.8, 0.2, 1),
+    opacity 220ms ease-out;
+}
+
+.hades-toast.is-visible {
+  transform: translateX(0%);
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.hades-toast.is-hiding {
+  transform: translateX(130%);
+  opacity: 0;
+  pointer-events: none;
+}
+
+.hades-image-wrap {
+  flex-shrink: 0;
+  width: 60px;
+  height: 60px;
+  border-radius: 999px;
+  overflow: hidden;
+  background: radial-gradient(
+    circle at 30% 0%,
+    rgba(100, 255, 218, 0.45),
+    transparent 55%
+  );
+}
+
+.hades-image {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  filter: drop-shadow(0 0 10px rgba(100, 255, 218, 0.85));
+}
+
+.hades-text {
+  flex: 1;
+  min-width: 0;
+}
+
+.hades-label {
+  margin: 0 0 0.1rem 0;
+  font-size: 0.7rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(148, 163, 184, 0.9);
+}
+
+.hades-message {
+  margin: 0;
+  font-size: 0.86rem;
+  line-height: 1.35;
+  color: #e5edff;
+}
+
+.hades-message span {
+  color: #64ffda;
+  font-weight: 500;
+}
+
+.hades-close {
+  flex-shrink: 0;
+  border: none;
+  background: transparent;
+  color: rgba(148, 163, 184, 0.95);
+  font-size: 1.1rem;
+  cursor: pointer;
+  padding: 0 0 0 0.4rem;
+  transition: color 150ms ease-out;
+}
+
+.hades-close:hover {
+  color: #64ffda;
+}
+
+/* Mobile: move up a bit & tighten */
+@media (max-width: 640px) {
+  .hades-toast {
+    left: 1rem;
+    right: 1rem;
+    bottom: 1.25rem;
+    max-width: none;
+  }
+
+  .hades-image-wrap {
+    width: 52px;
+    height: 52px;
+  }
+
+  .hades-message {
+    font-size: 0.8rem;
+  }
+}
+
+/* ==============================
+   Showcase Updates Modal
+   ============================== */
+
+.showcase-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: radial-gradient(
+      circle at top right,
+      rgba(100, 255, 218, 0.06),
+      transparent 55%
+    ),
+    rgba(0, 0, 0, 0.72);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+  opacity: 0;
+  pointer-events: none;
+  z-index: 998;
+  transition:
+    opacity 260ms ease-out,
+    backdrop-filter 260ms ease-out;
+  backdrop-filter: blur(0px);
+}
+
+.showcase-modal-backdrop.is-open {
+  opacity: 1;
+  pointer-events: auto;
+  backdrop-filter: blur(10px);
+}
+
+.showcase-modal-panel {
+  position: relative;
+  max-width: 520px;
+  width: 100%;
+  padding: 1.5rem 1.6rem 1.35rem;
+  border-radius: 1rem;
+  background: linear-gradient(
+      135deg,
+      rgba(15, 23, 42, 0.96),
+      rgba(15, 23, 42, 0.9)
+    );
+  border: 1px solid rgba(100, 255, 218, 0.32);
+  box-shadow:
+    0 26px 60px rgba(0, 0, 0, 0.85),
+    0 0 0 1px rgba(15, 23, 42, 0.9);
+}
+
+.showcase-modal-kicker {
+  margin: 0 0 0.25rem;
+  font-size: 0.75rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(148, 163, 184, 0.9);
+}
+
+.showcase-modal-title {
+  margin: 0 0 0.7rem;
+  font-size: 1.25rem;
+  color: #e5edff;
+}
+
+.showcase-modal-list {
+  margin: 0 0 0.65rem;
+  padding-left: 1.1rem;
+  font-size: 0.9rem;
+  color: rgba(203, 213, 225, 0.96);
+}
+
+.showcase-modal-list li + li {
+  margin-top: 0.25rem;
+}
+
+.showcase-modal-foot {
+  margin: 0 0 0.9rem;
+  font-size: 0.83rem;
+  color: rgba(148, 163, 184, 0.98);
+}
+
+.showcase-modal-cta {
+  width: 100%;
+  justify-content: center;
+}
+
+.showcase-modal-close {
+  position: absolute;
+  top: 0.7rem;
+  right: 0.8rem;
+  border: none;
+  background: transparent;
+  color: rgba(148, 163, 184, 0.9);
+  font-size: 1.2rem;
+  cursor: pointer;
+  padding: 0;
+  line-height: 1;
+  transition: color 150ms ease-out;
+}
+
+.showcase-modal-close:hover {
+  color: #64ffda;
+}
+
+@media (max-width: 640px) {
+  .showcase-modal-panel {
+    padding: 1.35rem 1.2rem 1.1rem;
+  }
+
+  .showcase-modal-title {
+    font-size: 1.1rem;
+  }
+
+  .showcase-modal-list {
+    font-size: 0.84rem;
+  }
+}
+
+/* Hades / Showcase modal art */
+.showcase-modal-panel {
+  position: relative;
+  overflow: hidden;
+}
+
+.showcase-modal-hero {
+  position: absolute;
+  right: -20px;
+  top: -10px;
+  width: 180px;
+  opacity: 0.22;
+  pointer-events: none;
+}
+
+.showcase-modal-image {
+  display: block;
+  width: 100%;
+  height: auto;
+  filter: drop-shadow(0 0 18px rgba(100, 255, 218, 0.45));
+}
+
+/* Keep text above the illustration */
+.showcase-modal-kicker,
+.showcase-modal-title,
+.showcase-modal-list,
+.showcase-modal-foot,
+.showcase-modal-cta {
+  position: relative;
+  z-index: 1;
+}
+
+/* On small screens, shrink / fade him a bit */
+@media (max-width: 768px) {
+  .showcase-modal-hero {
+    width: 130px;
+    opacity: 0.18;
+    right: -10px;
+    top: -5px;
+  }
+}
+
