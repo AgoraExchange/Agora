@@ -78,8 +78,8 @@
                 </button>
               </li>
               <li>
-                <button class="nav-link" type="button" data-view="contact">
-                  Contact
+                <button class="nav-link" type="button" data-view="gallery">
+                  Showcase
                 </button>
               </li>
             </ul>
@@ -604,6 +604,180 @@
           </div>
         </section>
 
+        <!-- ========= VIEW: GALLERY / SHOWCASE ========= -->
+        <section
+          class="view view-gallery"
+          data-view="gallery"
+          aria-label="Agora build gallery"
+          hidden
+        >
+          <div class="view-inner">
+            <header class="view-header">
+              <p class="view-kicker">Gallery</p>
+              <h2 class="view-title">Selected builds, tools, and hardware.</h2>
+              <p class="view-subtitle">
+                A visual snapshot of some of the websites, software, and tinker projects
+                Agora has brought to life. Images are grouped by discipline so you can
+                see how we move across different lanes.
+              </p>
+            </header>
+
+            <div class="gallery-filters" role="tablist" aria-label="Filter gallery">
+              <button class="filter-btn is-active" type="button" data-filter="all">
+                All
+              </button>
+              <button class="filter-btn" type="button" data-filter="software">
+                Software
+              </button>
+              <button class="filter-btn" type="button" data-filter="websites">
+                Websites
+              </button>
+              <button class="filter-btn" type="button" data-filter="tinker">
+                Tinker
+              </button>
+            </div>
+
+            <div class="gallery-grid">
+              <!-- SOFTWARE ITEMS -->
+              <article class="gallery-item" data-category="software">
+                <figure class="gallery-figure">
+                  <!-- replace filename with your real asset -->
+                  <img
+                    src="photos/Software/software-1.png"
+                    alt="Custom security automation console"
+                  />
+                </figure>
+                <h3 class="gallery-title">Security Automation Suite</h3>
+                <p class="gallery-desc">
+                  A tailored control panel for running scripts, enrichment jobs, and
+                  scheduled checks — built for a small investigations team.
+                </p>
+              </article>
+
+              <article class="gallery-item" data-category="software">
+                <figure class="gallery-figure">
+                  <img
+                    src="photos/Software/software-2.png"
+                    alt="Desktop-style operator panel"
+                  />
+                </figure>
+                <h3 class="gallery-title">Operator Toolkit</h3>
+                <p class="gallery-desc">
+                  A modular toolbox app that centralizes logs, shortcuts, and field tools
+                  into a single operator-friendly interface.
+                </p>
+              </article>
+
+              <article class="gallery-item" data-category="software">
+                <figure class="gallery-figure">
+                  <img
+                    src="photos/Software/software-3.png"
+                    alt="Plutous crypto mining dashboard interface"
+                  />
+                </figure>
+                <h3 class="gallery-title">Plutous</h3>
+                <p class="gallery-desc">
+                  A high-efficiency crypto mining suite. Engineered to optimize hash
+                  & performance.
+                  Built for operators who want clean control panels, smart alerts, and
+                  multi-coin monitoring without the noise.
+                </p>
+              </article>
+
+              <!-- WEBSITE ITEMS -->
+              <article class="gallery-item" data-category="websites">
+                <figure class="gallery-figure">
+                  <img
+                    src="photos/Websites/website-1.png"
+                    alt="Cyber-themed landing page"
+                  />
+                </figure>
+                <h3 class="gallery-title">Cyber Brand Landing</h3>
+                <p class="gallery-desc">
+                  A high-contrast, cyber-styled landing page built for a security studio
+                  looking to stand out from generic SaaS templates.
+                </p>
+              </article>
+
+              <article class="gallery-item" data-category="websites">
+                <figure class="gallery-figure">
+                  <img
+                    src="photos/Websites/website-2.png"
+                    alt="Multi-section portfolio website"
+                  />
+                </figure>
+                <h3 class="gallery-title">Operator Portfolio</h3>
+                <p class="gallery-desc">
+                  A personal site for a security professional — sleek sections for cases,
+                  tools, and write-ups, presented like a mission log.
+                </p>
+              </article>
+
+              <!-- TINKER / HARDWARE ITEMS -->
+              <article class="gallery-item" data-category="tinker">
+                <figure class="gallery-figure">
+                  <img
+                    src="photos/Tinker/tinker-1.png"
+                    alt="ESP32 gadget prototype on bench"
+                  />
+                </figure>
+                <h3 class="gallery-title">ESP32 Field Module</h3>
+                <p class="gallery-desc">
+                  A compact ESP32-based module designed for field testing, basic
+                  telemetry, and controlled payload execution.
+                </p>
+              </article>
+
+              <article class="gallery-item" data-category="tinker">
+                <figure class="gallery-figure">
+                  <img
+                    src="photos/Tinker/tinker-2.png"
+                    alt="Raspberry Pi rig in a custom enclosure"
+                  />
+                </figure>
+                <h3 class="gallery-title">Raspberry Pi Ops Rig</h3>
+                <p class="gallery-desc">
+                  A portable Raspberry Pi build with a custom enclosure, tuned for
+                  on-the-go experiments, dashboards, and recon tooling.
+                </p>
+              </article>
+
+              <article class="gallery-item" data-category="tinker">
+                <figure class="gallery-figure">
+                  <img
+                    src="photos/Tinker/tinker-4.png"
+                    alt="AGORA Signal Beacon diagnostic field module"
+                  />
+                </figure>
+                <h3 class="gallery-title">AGORA Signal Beacon</h3>
+                <p class="gallery-desc">
+                  A compact sensor & telemetry puck built for field diagnostics, portable
+                  environment scanning, and device health monitoring. Features modular
+                  plug-in sensor cartridges and a low-power MCU for on-the-go operator
+                  workflows.
+                </p>
+              </article>
+
+              <!-- TINKER / HARDWARE ITEMS -->
+              <article class="gallery-item" data-category="tinker">
+                <figure class="gallery-figure">
+                  <img
+                    src="photos/Tinker/tinker-3.png"
+                    alt="Flipper-1 multi-protocol GPIO expansion module"
+                  />
+                </figure>
+                <h3 class="gallery-title">Flipper 1</h3>
+                <p class="gallery-desc">
+                  A next-generation expansion module inspired by the Flipper Zero ecosystem — 
+                  Features an all-in-one GPIO attachment supporting NFC, CC1101, nRF24, GPS,
+                  2.4GHz & 433MHz for field testing and research workflows.
+                </p>
+              </article>
+
+            </div>
+          </div>
+        </section>
+
         <!-- ========= VIEW: LEARN ========= -->
         <section
           class="view view-learn"
@@ -865,6 +1039,93 @@
         </section>
       </main>
 
+      <!-- Hades / Agora update toast -->
+      <div id="hades-toast" class="hades-toast" aria-live="polite">
+        <div class="hades-image-wrap">
+          <img
+            src="HadesAgora.png"
+            alt="Hades — Agora sentinel"
+            class="hades-image"
+          />
+        </div>
+        <div class="hades-text">
+          <p class="hades-label">Agora Signal</p>
+          <p class="hades-message" id="hades-message">
+            <!-- Filled by script -->
+          </p>
+        </div>
+        <button
+          id="hades-close"
+          class="hades-close"
+          type="button"
+          aria-label="Dismiss notification"
+        >
+          ×
+        </button>
+      </div>
+
+            <!-- Showcase Updates Modal -->
+      <div
+        id="showcase-modal"
+        class="showcase-modal-backdrop"
+        aria-hidden="true"
+      >
+        <div
+          class="showcase-modal-panel"
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="showcase-modal-title"
+        >
+          <button
+            id="showcase-modal-close"
+            class="showcase-modal-close"
+            type="button"
+            aria-label="Close updates"
+          >
+            ×
+          </button>
+
+          <p class="showcase-modal-kicker">Showcase updates</p>
+          <h2 class="showcase-modal-title" id="showcase-modal-title">
+            What&rsquo;s new in the Agora Showcase
+          </h2>
+
+          <ul class="showcase-modal-list">
+            <li>
+              New visuals for <strong>Security Automation Suite</strong>,
+              <strong>Operator Toolkit</strong>, <strong>Plutous</strong>, and
+              more.
+            </li>
+            <li>
+              Fresh hardware entries including the
+              <strong>ESP32 Field Module</strong>,
+              <strong>Raspberry Pi Ops Rig</strong>,
+              <strong>Flipper-1</strong>, and
+              <strong>AGORA Signal Beacon</strong>.
+            </li>
+            <li>
+              Software, tinkers, and websites organized into clear sections so
+              you can scan builds at a glance.
+            </li>
+          </ul>
+
+          <p class="showcase-modal-foot">
+            New items land here first. Check back in the Showcase to see what
+            Agora is quietly shipping in the background.
+          </p>
+
+          <button
+            id="showcase-modal-cta"
+            class="btn btn-primary showcase-modal-cta"
+            type="button"
+          >
+            Browse the Showcase
+          </button>
+        </div>
+      </div>
+
+
+
       <!-- ==============================
            GLOBAL FOOTER
            ============================== -->
@@ -894,13 +1155,13 @@
             <button class="footer-link" type="button" data-view="learn">
               Learn
             </button>
+            <button class="footer-link" type="button" data-view="gallery">
+              Showcase
+            </button>
           </div>
 
           <div class="footer-col footer-links">
             <p class="footer-heading">Work with Agora</p>
-            <button class="footer-link" type="button" data-view="contact">
-              Contact
-            </button>
             <button class="footer-link" type="button" data-view="contact">
               Start a project brief
             </button>
@@ -909,8 +1170,8 @@
           <div class="footer-col footer-meta">
             <p class="footer-heading">Signal, not noise.</p>
             <p class="footer-body">
-              Occasional notes from the intersection of cyber, design, and custom
-              tooling — written for people who actually ship things.
+              Stay in the loop with new tools, feature drops,
+              behind-the-scenes updates, and special discounts.
             </p>
             <form class="footer-form" novalidate>
               <label class="visually-hidden" for="footer-email">
@@ -930,7 +1191,7 @@
 
         <div class="footer-bottom">
           <p class="footer-copy">
-            © <span id="footer-year"></span> Agora Exchange. All rights reserved.
+            © <span id="footer-year"></span> Agora Exchange. All rights reserved. | Powered By Tornet Market
           </p>
           <div class="footer-bottom-links">
             <a href="#" class="footer-bottom-link">Privacy</a>
