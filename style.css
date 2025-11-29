@@ -964,3 +964,23 @@ textarea {
  height: auto;
 }
 
+/* ============================================================
+   PRODUCT CARD — Consistent height + stronger bottom spacing
+   ============================================================ */
+
+.product-card {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  padding-bottom: 1.25rem; /* subtle extra spacing at bottom */
+}
+
+.product-card .card-body,
+.product-card .card-list {
+  flex-grow: 1; /* pushes the button downward */
+}
+
+.product-card .btn-secondary {
+  margin-top: 1.75rem; /* EXTRA breathing room above button */
+  align-self: flex-start;
+}
