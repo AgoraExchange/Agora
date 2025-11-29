@@ -90,8 +90,12 @@ document.addEventListener("DOMContentLoaded", () => {
         "- Controlled attack-path exploration\n" +
         "- Practical recommendations based on real findings\n\n" +
         "Here’s more about my environment, goals, and concerns:";
-        // Custom Gadgets / Modules / Tinker Hardware
-    } else if (label.includes("gadget") || label.includes("tinker") || label.includes("module")) {
+      // Custom Gadgets / Modules / Tinker Hardware
+    } else if (
+      label.includes("gadget") ||
+      label.includes("tinker") ||
+      label.includes("module")
+    ) {
       focusValue = "other";
       message =
         "I’m interested in a custom hardware / tinker build. I’d like to create a device such as:\n\n" +
@@ -323,7 +327,11 @@ document.addEventListener("DOMContentLoaded", () => {
         });
 
         if (!res.ok) {
-          console.error("Discord webhook error (contact):", res.status, res.statusText);
+          console.error(
+            "Discord webhook error (contact):",
+            res.status,
+            res.statusText
+          );
           alert(
             "We hit an issue sending your request to Agora. Please try again in a moment."
           );
@@ -340,6 +348,204 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     });
   }
+
+  /* ---------------------------------------------------------
+     Gallery Filters (Software / Websites / Tinker)
+     --------------------------------------------------------- */
+  const filterButtons = document.querySelectorAll(".filter-btn[data-filter]");
+  const galleryItems = document.querySelectorAll(".gallery-item");
+
+  if (filterButtons.length && galleryItems.length) {
+    filterButtons.forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const filter = btn.getAttribute("data-filter");
+
+        // toggle active state
+        filterButtons.forEach((b) => {
+          b.classList.toggle("is-active", b === btn);
+        });
+
+        // show / hide gallery items
+        galleryItems.forEach((item) => {
+          const category = item.getAttribute("data-category");
+          const shouldShow = filter === "all" || category === filter;
+          item.classList.toggle("is-hidden", !shouldShow);
+        });
+
+        // scroll to top of gallery when changing filter (nice UX)
+        const gallerySection = document.querySelector(".view-gallery.is-active");
+        if (gallerySection) {
+          const top = gallerySection.offsetTop - 80;
+          window.scrollTo({ top, behavior: "smooth" });
+        }
+      });
+    });
+  }
+
+  /* ---------------------------------------------------------
+     Hades / Agora Signal Toast
+     --------------------------------------------------------- */
+  const hadesToast = document.getElementById("hades-toast");
+  const hadesMessageEl = document.getElementById("hades-message");
+  const hadesCloseBtn = document.getElementById("hades-close");
+
+  if (hadesToast && hadesMessageEl) {
+    const signals = [
+      {
+        name: "Plutous",
+        line:
+          "New crypto performance update deployed <hours> ago. Visit <span>Showcase</span> to see what changed.",
+      },
+      {
+        name: "Security Automation Suite",
+        line:
+          "Fresh automation runbooks landed <hours> ago. Check <span>Showcase</span> for the latest panels.",
+      },
+      {
+        name: "Operator Toolkit",
+        line:
+          "New operator shortcuts synced <hours> ago. Explore them in the <span>Showcase</span> grid.",
+      },
+      {
+        name: "ESP32 Field Module",
+        line:
+          "Telemetry profiles were tuned <hours> ago. Hardware details live under <span>Showcase</span>.",
+      },
+      {
+        name: "Raspberry Pi Ops Rig",
+        line:
+          "Dashboards and images refreshed <hours> ago. Scroll the <span>Showcase</span> to inspect.",
+      },
+      {
+        name: "Flipper-1",
+        line:
+          "Field module presets updated <hours> ago. See the new loadout in the <span>Showcase</span>.",
+      },
+      {
+        name: "AGORA Signal Beacon",
+        line:
+          "Sensor profiles recalibrated <hours> ago. Latest spec is pinned in <span>Showcase</span>.",
+      },
+    ];
+
+    function getRandomSignal() {
+      const pick = signals[Math.floor(Math.random() * signals.length)];
+      const hours = Math.floor(Math.random() * 10) + 1; // 1–10 hours
+      const line = pick.line.replace(
+        "<hours>",
+        `${hours} hour${hours === 1 ? "" : "s"}`
+      );
+      return line;
+    }
+
+    function showHadesToast() {
+      // respect reduced motion users – still show but no slide animation
+      const prefersReducedMotion =
+        window.matchMedia &&
+        window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+      hadesMessageEl.innerHTML = getRandomSignal();
+
+      if (prefersReducedMotion) {
+        hadesToast.style.transform = "none";
+        hadesToast.style.opacity = "1";
+        hadesToast.classList.add("is-visible");
+      } else {
+        hadesToast.classList.add("is-visible");
+      }
+
+      // Auto-hide after ~4 seconds
+      setTimeout(() => {
+        hadesToast.classList.add("is-hiding");
+        setTimeout(() => {
+          hadesToast.classList.remove("is-visible", "is-hiding");
+        }, 420);
+      }, 4000);
+    }
+
+    let hadesShown = false;
+
+    // trigger once shortly after initial load
+    setTimeout(() => {
+      if (!hadesShown) {
+        hadesShown = true;
+        showHadesToast();
+      }
+    }, 900);
+
+    if (hadesCloseBtn) {
+      hadesCloseBtn.addEventListener("click", () => {
+        hadesToast.classList.add("is-hiding");
+        setTimeout(() => {
+          hadesToast.classList.remove("is-visible", "is-hiding");
+        }, 300);
+      });
+    }
+  }
+
+  /* ---------------------------------------------------------
+     Showcase Updates Modal (first-time only)
+     --------------------------------------------------------- */
+  const SHOWCASE_SEEN_KEY = "agoraShowcaseSeen";
+  const showcaseModal = document.getElementById("showcase-modal");
+  const showcaseModalClose = document.getElementById("showcase-modal-close");
+  const showcaseModalCta = document.getElementById("showcase-modal-cta");
+
+  function openShowcaseModalOnce() {
+    if (!showcaseModal) return;
+
+    const alreadySeen = localStorage.getItem(SHOWCASE_SEEN_KEY) === "true";
+    if (alreadySeen) return;
+
+    // mark as seen so we only show this the first time
+    localStorage.setItem(SHOWCASE_SEEN_KEY, "true");
+    showcaseModal.classList.add("is-open");
+  }
+
+  function closeShowcaseModal() {
+    if (!showcaseModal) return;
+    showcaseModal.classList.remove("is-open");
+  }
+
+  if (showcaseModalClose) {
+    showcaseModalClose.addEventListener("click", closeShowcaseModal);
+  }
+
+  if (showcaseModalCta) {
+    showcaseModalCta.addEventListener("click", closeShowcaseModal);
+  }
+
+  // Click outside the panel to close
+  if (showcaseModal) {
+    showcaseModal.addEventListener("click", (event) => {
+      if (event.target === showcaseModal) {
+        closeShowcaseModal();
+      }
+    });
+  }
+
+  // Escape key closes modal
+  document.addEventListener("keydown", (event) => {
+    if (
+      event.key === "Escape" &&
+      showcaseModal &&
+      showcaseModal.classList.contains("is-open")
+    ) {
+      closeShowcaseModal();
+    }
+  });
+
+  // Any Showcase / Gallery trigger should be able to open it
+  const showcaseTriggers = document.querySelectorAll(
+    '[data-view="showcase"], [data-view="gallery"]'
+  );
+
+  showcaseTriggers.forEach((btn) => {
+    btn.addEventListener("click", () => {
+      // let the view transition settle, then show modal (if first time)
+      setTimeout(openShowcaseModalOnce, 600);
+    });
+  });
 
   /* ---------------------------------------------------------
      Footer Newsletter Handling
@@ -360,7 +566,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
       const embed = {
         title: "New Newsletter Signup",
-        description: "A user requested to receive updates from Agora Exchange.",
+        description:
+          "A user requested to receive updates, product news, and possible discounts from Agora Exchange.",
         color: 0x00c8ff,
         fields: [
           {
@@ -395,7 +602,11 @@ document.addEventListener("DOMContentLoaded", () => {
         });
 
         if (!res.ok) {
-          console.error("Discord webhook error (newsletter):", res.status, res.statusText);
+          console.error(
+            "Discord webhook error (newsletter):",
+            res.status,
+            res.statusText
+          );
           alert(
             "We hit an issue adding this email to the updates queue. Please try again shortly."
           );
@@ -403,7 +614,9 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
         footerForm.reset();
-        alert("Subscribed. You’ll be added to the Agora updates list.");
+        alert(
+          "Subscribed. You’ll be added to the Agora updates list for news, releases, and occasional discounts."
+        );
       } catch (err) {
         console.error("Discord webhook fetch failed (newsletter):", err);
         alert(
@@ -449,8 +662,8 @@ document.addEventListener("DOMContentLoaded", () => {
     appShell.style.zIndex = "1";
 
     const ctx = canvas.getContext("2d");
-    let width = canvas.width = window.innerWidth;
-    let height = canvas.height = window.innerHeight;
+    let width = (canvas.width = window.innerWidth);
+    let height = (canvas.height = window.innerHeight);
 
     const NODE_COUNT_DESKTOP = 42;
     const NODE_COUNT_MOBILE = 22;
@@ -459,7 +672,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
     function initNodes() {
       nodes.length = 0;
-      const count = window.innerWidth < 768 ? NODE_COUNT_MOBILE : NODE_COUNT_DESKTOP;
+      const count =
+        window.innerWidth < 768 ? NODE_COUNT_MOBILE : NODE_COUNT_DESKTOP;
 
       for (let i = 0; i < count; i++) {
         nodes.push({
@@ -490,8 +704,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
       // Soft vignette gradient
       const gradient = ctx.createRadialGradient(
-        width * 0.5, height * 0.2, 0,
-        width * 0.5, height * 0.6, Math.max(width, height)
+        width * 0.5,
+        height * 0.2,
+        0,
+        width * 0.5,
+        height * 0.6,
+        Math.max(width, height)
       );
       gradient.addColorStop(0, "rgba(15, 23, 42, 0.0)");
       gradient.addColorStop(1, "rgba(15, 23, 42, 0.9)");
