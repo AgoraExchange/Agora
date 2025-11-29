@@ -90,6 +90,16 @@ document.addEventListener("DOMContentLoaded", () => {
         "- Controlled attack-path exploration\n" +
         "- Practical recommendations based on real findings\n\n" +
         "Here’s more about my environment, goals, and concerns:";
+        // Custom Gadgets / Modules / Tinker Hardware
+    } else if (label.includes("gadget") || label.includes("tinker") || label.includes("module")) {
+      focusValue = "other";
+      message =
+        "I’m interested in a custom hardware / tinker build. I’d like to create a device such as:\n\n" +
+        "- ESP32 / ESP8266 module\n" +
+        "- Raspberry Pi portable rig or embedded system\n" +
+        "- Flipper Zero GPIO add-on or extension board\n" +
+        "- A small RF gadget, tool, or payload module\n\n" +
+        "Here’s the idea, purpose, and any technical details I already know:";
     } else {
       // Generic Contact / Engage Agora / Contact buttons:
       // Only prefill if the message box is currently empty
