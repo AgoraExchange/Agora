@@ -821,3 +821,94 @@ document.addEventListener("click", (event) => {
   }, 10);
 });
 
+/* =========================================================
+   AGORA EXCHANGE — Showcase Modal Mesh Background
+   Re-uses the main site mesh logic but scoped to modal only
+   ========================================================= */
+
+(function () {
+  const modalPanel = document.querySelector(".showcase-modal-panel");
+  const modalCanvas = document.getElementById("showcase-mesh");
+  if (!modalPanel || !modalCanvas) return;
+
+  const ctx = modalCanvas.getContext("2d");
+
+  function resizeCanvas() {
+    modalCanvas.width = modalPanel.offsetWidth;
+    modalCanvas.height = modalPanel.offsetHeight;
+  }
+
+  resizeCanvas();
+  window.addEventListener("resize", resizeCanvas);
+
+  const nodes = [];
+  const LINK_DIST = 120;
+  const COUNT = 26;
+
+  function init() {
+    nodes.length = 0;
+    for (let i = 0; i < COUNT; i++) {
+      nodes.push({
+        x: Math.random() * modalCanvas.width,
+        y: Math.random() * modalCanvas.height,
+        vx: (Math.random() - 0.5) * 0.25,
+        vy: (Math.random() - 0.5) * 0.25,
+        r: 1 + Math.random() * 1.2
+      });
+    }
+  }
+
+  function draw() {
+    ctx.clearRect(0, 0, modalCanvas.width, modalCanvas.height);
+
+    // Links
+    for (let i = 0; i < nodes.length; i++) {
+      for (let j = i + 1; j < nodes.length; j++) {
+        const a = nodes[i];
+        const b = nodes[j];
+        const dx = a.x - b.x;
+        const dy = a.y - b.y;
+        const dist = Math.sqrt(dx * dx + dy * dy);
+
+        if (dist < LINK_DIST) {
+          const alpha = 1 - dist / LINK_DIST;
+          ctx.strokeStyle = `rgba(100,255,218,${alpha * 0.18})`;
+          ctx.lineWidth = 1;
+          ctx.beginPath();
+          ctx.moveTo(a.x, a.y);
+          ctx.lineTo(b.x, b.y);
+          ctx.stroke();
+        }
+      }
+    }
+
+    // Nodes
+    nodes.forEach((n) => {
+      ctx.beginPath();
+      ctx.fillStyle = "rgba(100,255,218,0.9)";
+      ctx.arc(n.x, n.y, n.r, 0, Math.PI * 2);
+      ctx.fill();
+    });
+  }
+
+  function update() {
+    nodes.forEach((n) => {
+      n.x += n.vx;
+      n.y += n.vy;
+
+      if (n.x < -10) n.x = modalCanvas.width + 10;
+      if (n.x > modalCanvas.width + 10) n.x = -10;
+      if (n.y < -10) n.y = modalCanvas.height + 10;
+      if (n.y > modalCanvas.height + 10) n.y = -10;
+    });
+  }
+
+  function loop() {
+    update();
+    draw();
+    requestAnimationFrame(loop);
+  }
+
+  init();
+  loop();
+})();
