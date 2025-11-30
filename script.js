@@ -783,3 +783,41 @@ document.addEventListener("DOMContentLoaded", () => {
     loop();
   });
 })();
+
+// ======================================================
+// Force scroll-to-top on any internal "page" change
+// (for anything using data-view="...")
+// ======================================================
+document.addEventListener("click", (event) => {
+  const trigger = event.target.closest("[data-view]");
+  if (!trigger) return;
+
+  const targetView = trigger.getAttribute("data-view");
+  if (!targetView) return;
+
+  // Tiny delay so the view swap logic runs first
+  setTimeout(() => {
+    // Try scrolling the main window
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+
+    // Also try scrolling main app containers, in case they’re scrollable
+    const possibleScrollers = [
+      document.querySelector(".site-main"),
+      document.querySelector(".app-shell"),
+      document.documentElement,
+      document.body,
+    ];
+
+    possibleScrollers.forEach((el) => {
+      if (!el || typeof el.scrollTo !== "function") return;
+      el.scrollTo({
+        top: 0,
+        behavior: "smooth",
+      });
+    });
+  }, 10);
+});
+
