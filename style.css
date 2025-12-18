@@ -90,6 +90,7 @@ body * {
   justify-content: center;
   gap: 6px;
   white-space: nowrap;
+  text-decoration: none; /* important for <a class="btn"> */
 }
 
 .btn-primary {
@@ -201,6 +202,7 @@ body * {
   gap: 18px;
 }
 
+/* ✅ nav-link supports both <button> and <a> now */
 .nav-link {
   background: transparent;
   border: none;
@@ -208,10 +210,24 @@ body * {
   font-size: 14px;
   cursor: pointer;
   transition: var(--transition);
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  line-height: 1;
+  padding: 8px 10px;
+  border-radius: 10px;
 }
+
 .nav-link:hover,
 .nav-link.is-active {
   color: var(--accent);
+}
+
+/* ✅ external nav links (career.html) keep same look */
+.nav-link-external:hover {
+  color: var(--accent);
+  background: rgba(77, 216, 255, 0.08);
+  border: 1px solid rgba(77, 216, 255, 0.18);
 }
 
 /* CTA in nav */
@@ -223,6 +239,8 @@ body * {
   color: #000;
   font-weight: 600;
   transition: var(--transition);
+  border: none;
+  cursor: pointer;
 }
 .nav-cta:hover {
   background: #6ee4ff;
@@ -647,15 +665,30 @@ textarea {
   align-items: center;
 }
 
+/* ✅ footer-bottom-link is used by <a> links (Careers/Terms/etc) */
 .footer-bottom-link {
   color: var(--text-soft);
   margin-left: 16px;
   font-size: 13px;
   text-decoration: none;
   transition: var(--transition);
+  padding: 6px 8px;
+  border-radius: 10px;
 }
 .footer-bottom-link:hover {
   color: var(--accent);
+  background: rgba(77, 216, 255, 0.08);
+  border: 1px solid rgba(77, 216, 255, 0.14);
+}
+
+/* ✅ Optional: a slightly “CTA-ish” footer link style if you want it later */
+.footer-bottom-link.is-cta {
+  color: var(--accent);
+  border: 1px solid rgba(77, 216, 255, 0.18);
+  background: rgba(77, 216, 255, 0.06);
+}
+.footer-bottom-link.is-cta:hover {
+  background: rgba(77, 216, 255, 0.12);
 }
 
 /* ============================================================
@@ -737,11 +770,14 @@ textarea {
   .nav-list {
     flex-direction: column;
     gap: 10px;
+    width: 100%;
   }
 
   .nav-link {
     font-size: 15px;
     text-align: left;
+    width: 100%;
+    justify-content: flex-start;
   }
 
   .nav-cta {
@@ -839,6 +875,12 @@ textarea {
 
   .footer-bottom-links {
     margin-left: -4px;
+  }
+
+  /* ✅ avoid big left margins on footer links in stacked mode */
+  .footer-bottom-link {
+    margin-left: 0;
+    margin-right: 10px;
   }
 }
 
@@ -961,7 +1003,7 @@ textarea {
 /* Footer logo size */
 .brand-mark-small .brand-logo-image {
   width: 28px;
- height: auto;
+  height: auto;
 }
 
 /* ============================================================
@@ -1254,15 +1296,43 @@ textarea {
   width: 100%;
   padding: 1.5rem 1.6rem 1.35rem;
   border-radius: 1rem;
-  background: linear-gradient(
-      135deg,
-      rgba(15, 23, 42, 0.96),
-      rgba(15, 23, 42, 0.9)
-    );
-  border: 1px solid rgba(100, 255, 218, 0.32);
-  box-shadow:
-    0 26px 60px rgba(0, 0, 0, 0.85),
-    0 0 0 1px rgba(15, 23, 42, 0.9);
+  background: rgba(8, 14, 26, 0.92);
+  backdrop-filter: blur(18px);
+  border: 1px solid rgba(120, 220, 255, 0.12);
+  box-shadow: 0 25px 45px rgba(0, 0, 0, 0.55);
+  overflow: hidden;
+}
+
+.showcase-modal-bg {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  overflow: hidden;
+  opacity: 0.4;
+}
+
+#showcase-mesh {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.showcase-modal-bg::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    ellipse at center,
+    rgba(0, 0, 0, 0.25) 0%,
+    rgba(0, 0, 0, 0.45) 100%
+  );
+  pointer-events: none;
+  z-index: 2;
+}
+
+.showcase-modal-panel > *:not(.showcase-modal-bg) {
+  position: relative;
+  z-index: 10;
 }
 
 .showcase-modal-kicker {
@@ -1303,20 +1373,22 @@ textarea {
 
 .showcase-modal-close {
   position: absolute;
-  top: 0.7rem;
-  right: 0.8rem;
+  top: -8px;
+  right: 12px;
+  z-index: 20;
+  background: none;
   border: none;
-  background: transparent;
-  color: rgba(148, 163, 184, 0.9);
-  font-size: 1.2rem;
-  cursor: pointer;
-  padding: 0;
+  font-size: 28px;
   line-height: 1;
-  transition: color 150ms ease-out;
+  color: rgba(255, 255, 255, 0.7);
+  cursor: pointer;
+  padding: 4px 8px;
+  transition: color 0.2s ease, transform 0.2s ease;
 }
 
 .showcase-modal-close:hover {
   color: #64ffda;
+  transform: scale(1.12);
 }
 
 @media (max-width: 640px) {
@@ -1333,113 +1405,17 @@ textarea {
   }
 }
 
-/* Hades / Showcase modal art */
-.showcase-modal-panel {
-  position: relative;
+/* ============================
+   VISUALLY HIDDEN (for labels)
+   ============================ */
+.visually-hidden {
+  position: absolute !important;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
   overflow: hidden;
-}
-
-.showcase-modal-hero {
-  position: absolute;
-  right: -20px;
-  top: -10px;
-  width: 180px;
-  opacity: 0.22;
-  pointer-events: none;
-}
-
-.showcase-modal-image {
-  display: block;
-  width: 100%;
-  height: auto;
-  filter: drop-shadow(0 0 18px rgba(100, 255, 218, 0.45));
-}
-
-/* Keep text above the illustration */
-.showcase-modal-kicker,
-.showcase-modal-title,
-.showcase-modal-list,
-.showcase-modal-foot,
-.showcase-modal-cta {
-  position: relative;
-  z-index: 1;
-}
-
-/* On small screens, shrink / fade him a bit */
-@media (max-width: 768px) {
-  .showcase-modal-hero {
-    width: 130px;
-    opacity: 0.18;
-    right: -10px;
-    top: -5px;
-  }
-}
-
-/* ================================================
-   Showcase Modal — Enhanced Dark Mesh Background
-   ================================================ */
-
-.showcase-modal-panel {
-  position: relative;
-  overflow: hidden;
-  background: rgba(8, 14, 26, 0.92); /* Slightly darker */
-  backdrop-filter: blur(18px);
-  border: 1px solid rgba(120, 220, 255, 0.12);
-  box-shadow: 0 25px 45px rgba(0, 0, 0, 0.55); /* Heavier drop shadow */
-}
-
-/* Background container for mesh */
-.showcase-modal-bg {
-  position: absolute;
-  inset: 0;
-  z-index: 1;
-  overflow: hidden;
-  opacity: 0.40; /* Slightly darker than before */
-}
-
-/* Canvas fills the modal */
-#showcase-mesh {
-  width: 100%;
-  height: 100%;
-  display: block;
-}
-
-/* NEW: subtle darkening overlay on top of canvas */
-.showcase-modal-bg::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: radial-gradient(
-    ellipse at center,
-    rgba(0, 0, 0, 0.25) 0%,    /* center darker a bit */
-    rgba(0, 0, 0, 0.45) 100%   /* edges fade to darker */
-  );
-  pointer-events: none;
-  z-index: 2;
-}
-
-/* Modal content sits above everything */
-.showcase-modal-panel > *:not(.showcase-modal-bg) {
-  position: relative;
-  z-index: 10;
-}
-
-.showcase-modal-close {
-  position: absolute;
-  top: -8px;      /* ← move it UP */
-  right: 12px;   /* slight adjustment to keep symmetry */
-  z-index: 20;
-  background: none;
-  border: none;
-  font-size: 28px;
-  line-height: 1;
-  color: rgba(255, 255, 255, 0.7);
-  cursor: pointer;
-  padding: 4px 8px;
-  transition: color 0.2s ease, transform 0.2s ease;
-}
-
-.showcase-modal-close:hover {
-  color: #64ffda;
-  transform: scale(1.12);
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
 }
