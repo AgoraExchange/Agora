@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, viewport-fit=cover"
+    />
+    <title>Agora Exchange — Careers</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+
+    <link rel="stylesheet" href="career-style.css" />
+  </head>
+
+  <body>
+    <div class="career-shell" id="career-shell">
+      <!-- Top Bar -->
+      <header class="career-header">
+        <div class="career-header-inner">
+          <a class="career-brand" href="index.html" aria-label="Back to site">
+            <span class="career-brand-mark" aria-hidden="true">
+              <img
+                class="career-brand-logo"
+                src="assets/agora-mark.png"
+                alt=""
+                onerror="this.style.display='none'; this.parentElement.textContent='A';"
+              />
+            </span>
+            <span class="career-brand-text">
+              <span class="career-brand-name">Agora Exchange</span>
+              <span class="career-brand-sub">Careers · Build the stack</span>
+            </span>
+          </a>
+
+          <a class="career-back" href="index.html">← Back to site</a>
+        </div>
+      </header>
+
+      <!-- Search / Filters -->
+      <main class="career-main">
+        <section class="career-search">
+          <div class="career-search-card">
+            <div class="career-search-row">
+              <div class="career-field">
+                <label for="career-location">Location</label>
+                <input
+                  id="career-location"
+                  type="text"
+                  placeholder="San Jose, San Francisco, Remote..."
+                  autocomplete="off"
+                />
+              </div>
+
+              <div class="career-field">
+                <label for="career-keyword">Keyword</label>
+                <input
+                  id="career-keyword"
+                  type="text"
+                  placeholder="developer, analyst, ops, designer..."
+                  autocomplete="off"
+                />
+              </div>
+
+              <div class="career-actions">
+                <button class="btn btn-primary" id="career-search-btn" type="button">
+                  Search roles
+                </button>
+                <button class="btn btn-ghost" id="career-reset-btn" type="button">
+                  Reset
+                </button>
+              </div>
+            </div>
+
+            <p class="career-search-footnote">
+              Roles shown here are example listings for your site experience. Applications submit to Agora review.
+            </p>
+          </div>
+        </section>
+
+        <!-- Results -->
+        <section class="career-results">
+          <div class="career-results-head">
+            <h2>Open roles</h2>
+            <p class="career-results-meta" id="results-meta">Showing all listings.</p>
+          </div>
+
+          <div class="career-results-grid" id="career-results"></div>
+        </section>
+
+        <!-- Apply (Hidden until click Apply) -->
+        <section class="career-apply" id="career-apply" hidden>
+          <div class="apply-card">
+            <div class="apply-head">
+              <div>
+                <h2 id="apply-title">Apply</h2>
+                <p id="apply-sub" class="apply-sub">Role details</p>
+              </div>
+
+              <div class="apply-progress">
+                <div class="apply-progress-bar">
+                  <span class="apply-progress-fill" id="apply-progress-fill"></span>
+                </div>
+                <div class="apply-progress-text" id="apply-progress-text">0% complete</div>
+              </div>
+            </div>
+
+            <form id="apply-form" class="apply-form">
+              <!-- Step 1 -->
+              <div class="apply-step is-active" data-step="1">
+                <h3>Basics</h3>
+
+                <div class="form-grid">
+                  <div class="form-field">
+                    <label for="app-name">Full name</label>
+                    <input id="app-name" type="text" required placeholder="Jane Operator" />
+                  </div>
+
+                  <div class="form-field">
+                    <label for="app-email">Email</label>
+                    <input
+                      id="app-email"
+                      type="email"
+                      required
+                      placeholder="you@domain.com"
+                    />
+                  </div>
+
+                  <div class="form-field">
+                    <label for="app-location">Your location</label>
+                    <input id="app-location" type="text" placeholder="San Jose, CA" />
+                  </div>
+
+                  <div class="form-field">
+                    <label for="app-availability">Availability</label>
+                    <select id="app-availability">
+                      <option value="">Select…</option>
+                      <option>Immediately</option>
+                      <option>1–2 weeks</option>
+                      <option>2–4 weeks</option>
+                      <option>1–2 months</option>
+                      <option>Just browsing</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Step 2 -->
+              <div class="apply-step" data-step="2" hidden>
+                <h3>Experience</h3>
+
+                <div class="form-grid">
+                  <div class="form-field">
+                    <label for="app-years">Years of experience</label>
+                    <select id="app-years">
+                      <option value="">Select…</option>
+                      <option>0–1</option>
+                      <option>1–3</option>
+                      <option>3–5</option>
+                      <option>5–8</option>
+                      <option>8+</option>
+                    </select>
+                  </div>
+
+                  <div class="form-field">
+                    <label for="app-stack">Primary stack</label>
+                    <input id="app-stack" type="text" placeholder="React, Node, Python, AWS..." />
+                  </div>
+
+                  <div class="form-field form-field-wide">
+                    <label for="app-exp">Experience highlights</label>
+                    <textarea
+                      id="app-exp"
+                      rows="4"
+                      placeholder="What have you built/shipped? What should we know?"
+                    ></textarea>
+                  </div>
+
+                  <div class="form-field form-field-wide">
+                    <label for="app-summary">Short pitch</label>
+                    <textarea
+                      id="app-summary"
+                      rows="4"
+                      placeholder="Why you? Why this role?"
+                    ></textarea>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Step 3 -->
+              <div class="apply-step" data-step="3" hidden>
+                <h3>Fit & Logistics</h3>
+
+                <div class="form-grid">
+                  <div class="form-field form-field-wide">
+                    <label for="app-why">Why do you want to work with Agora?</label>
+                    <textarea
+                      id="app-why"
+                      rows="4"
+                      placeholder="What about the mission / vibe / work interests you?"
+                    ></textarea>
+                  </div>
+
+                  <div class="form-field">
+                    <label for="app-training">Would you require in-office training?</label>
+                    <select id="app-training">
+                      <option value="">Select…</option>
+                      <option>No</option>
+                      <option>Yes</option>
+                      <option>Maybe / depends</option>
+                    </select>
+                  </div>
+
+                  <div class="form-field">
+                    <label for="app-workauth">Authorized to work (US)?</label>
+                    <select id="app-workauth">
+                      <option value="">Select…</option>
+                      <option>Yes</option>
+                      <option>No</option>
+                      <option>Need sponsorship</option>
+                    </select>
+                  </div>
+
+                  <div class="form-field">
+                    <label for="app-start">Earliest start date</label>
+                    <input id="app-start" type="date" />
+                  </div>
+
+                  <div class="form-field">
+                    <label for="app-comp">Comp expectations</label>
+                    <input id="app-comp" type="text" placeholder="$ / hr or annual range" />
+                  </div>
+
+                  <div class="form-field">
+                    <label for="app-portfolio">Portfolio / website</label>
+                    <input id="app-portfolio" type="url" placeholder="https://..." />
+                  </div>
+
+                  <div class="form-field">
+                    <label for="app-github">GitHub / LinkedIn</label>
+                    <input id="app-github" type="url" placeholder="https://..." />
+                  </div>
+
+                  <div class="form-field">
+                    <label for="app-resume">Resume file (optional)</label>
+                    <input id="app-resume" type="file" accept=".pdf,.doc,.docx" />
+                  </div>
+
+                  <div class="form-field">
+                    <label for="app-photo">Photo (optional)</label>
+                    <input id="app-photo" type="file" accept="image/*" />
+                  </div>
+                </div>
+              </div>
+
+              <!-- Step 4 -->
+              <div class="apply-step" data-step="4" hidden>
+                <h3>Review</h3>
+                <div id="review-panel" class="review-panel"></div>
+
+                <label class="consent">
+                  <input id="app-consent" type="checkbox" />
+                  I confirm this information is accurate.
+                </label>
+              </div>
+
+              <div class="apply-nav">
+                <button class="btn btn-ghost" id="apply-prev" type="button">
+                  Back
+                </button>
+                <button class="btn btn-secondary" id="apply-next" type="button">
+                  Next
+                </button>
+                <button class="btn btn-primary" id="apply-submit" type="submit" hidden>
+                  Submit application
+                </button>
+              </div>
+
+              <p class="apply-footnote">
+                Submissions go to Agora will be seen within 24 hours.
+              </p>
+            </form>
+          </div>
+        </section>
+
+        <!-- Confirmation -->
+        <section class="career-confirm" id="career-confirm" hidden>
+          <div class="confirm-card">
+            <h2>Application received</h2>
+            <p id="confirm-body">
+              Thanks — your application is in the Agora pipeline.
+            </p>
+            <button class="btn btn-secondary" id="confirm-search" type="button">
+              Back to search
+            </button>
+          </div>
+        </section>
+      </main>
+
+      <footer class="career-footer">
+        <div class="career-footer-inner">
+          <p>© <span id="career-year"></span> Agora Exchange · Signal, not noise.</p>
+        </div>
+      </footer>
+    </div>
+
+    <script src="career-script.js"></script>
+  </body>
+</html>
