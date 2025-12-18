@@ -164,21 +164,23 @@ document.addEventListener("DOMContentLoaded", () => {
       id: "agx-ea-01",
       title: "Executive Personal Assistant (Ops Support)",
       location: "San Jose, CA",
-      type: "Part-time",
-      pay: "$22–$35/hr",
+      type: "Full-time",
+      pay: "$63–$75/hr",
       short:
-        "Keep ops moving: scheduling, client follow-ups, basic reporting, and keeping the pipeline organized.",
+        "Keep ops moving: scheduling, client follow-ups, basic reporting, traveling with CEO, and keeping the pipeline organized.",
       about:
         "You’ll coordinate communication, keep tasks tracked, and keep the inbox from turning into chaos.",
       expected: [
         "Schedule coordination and follow-ups",
         "Light documentation and note taking",
         "Keep projects organized and moving",
+        "Traveling with CEO for business meetings",
       ],
       required: [
-        "Strong communication + organization",
+        "Strong communication + Organization + Bilingual",
         "Comfortable with Google tools + email",
         "Professional discretion",
+        "Comftorable with traveling + All paid expenses",
       ],
       keywords: ["assistant", "ops", "admin", "coordination"],
     },
