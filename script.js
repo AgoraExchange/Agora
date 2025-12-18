@@ -1,6 +1,7 @@
 /* =========================================================
    AGORA EXCHANGE — script.js
    View Switching · Navigation · Basic Form Handling
+   + Careers (career.html) safe linking support
    ========================================================= */
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -21,6 +22,23 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Shared email validator (must have "@", dot, and no spaces)
   const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+  /* ---------------------------------------------------------
+     Helper: identify external / real navigation anchors
+     --------------------------------------------------------- */
+  function isExternalOrRealNav(el) {
+    if (!el) return false;
+    if (el.tagName && el.tagName.toLowerCase() !== "a") return false;
+
+    const href = (el.getAttribute("href") || "").trim();
+
+    // Real navigation: career.html, /path, https://, mailto:, tel:, etc.
+    if (!href) return false;
+    if (href === "#") return false;
+
+    // allow normal navigation for anything not a hash-only link
+    return true;
+  }
 
   /* ---------------------------------------------------------
      Helper: Smooth Scroll to Top
@@ -90,7 +108,6 @@ document.addEventListener("DOMContentLoaded", () => {
         "- Controlled attack-path exploration\n" +
         "- Practical recommendations based on real findings\n\n" +
         "Here’s more about my environment, goals, and concerns:";
-      // Custom Gadgets / Modules / Tinker Hardware
     } else if (
       label.includes("gadget") ||
       label.includes("tinker") ||
@@ -108,7 +125,6 @@ document.addEventListener("DOMContentLoaded", () => {
       // Generic Contact / Engage Agora / Contact buttons:
       // Only prefill if the message box is currently empty
       if (!messageField || messageField.value.trim()) return;
-
       message = "Here’s what I’m trying to build or secure:";
     }
 
@@ -117,7 +133,6 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     if (messageField && message) {
-      // Don’t overwrite if the user already started typing
       if (!messageField.value.trim()) {
         messageField.value = message;
       }
@@ -141,22 +156,17 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     });
 
-    // Sync nav active state
+    // Sync nav active state (only for internal SPA links that have data-view)
     navLinks.forEach((link) => {
       const viewName = link.getAttribute("data-view");
-      if (viewName === targetView) {
-        link.classList.add("is-active");
-      } else {
-        link.classList.remove("is-active");
-      }
+      if (!viewName) return;
+      link.classList.toggle("is-active", viewName === targetView);
     });
 
     // Close mobile nav if open
     if (nav && nav.classList.contains("is-open")) {
       nav.classList.remove("is-open");
-      if (navToggle) {
-        navToggle.setAttribute("aria-expanded", "false");
-      }
+      if (navToggle) navToggle.setAttribute("aria-expanded", "false");
     }
 
     // Prefill contact form if we just navigated there from a specific button
@@ -169,13 +179,19 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   /* ---------------------------------------------------------
-     Global: Click any [data-view] trigger
+     Global: Click any [data-view] trigger (SPA only)
      --------------------------------------------------------- */
   function handleViewTriggerClick(event) {
-    event.preventDefault();
     const target = event.currentTarget;
+
+    // ✅ If someone accidentally adds data-view to a real link like career.html,
+    // let the browser navigate normally.
+    if (isExternalOrRealNav(target)) return;
+
+    event.preventDefault();
     const targetView = target.getAttribute("data-view");
     if (!targetView) return;
+
     setActiveView(targetView, target);
   }
 
@@ -216,6 +232,17 @@ document.addEventListener("DOMContentLoaded", () => {
         navToggle.setAttribute("aria-expanded", "false");
       }
     });
+
+    // ✅ Close nav when clicking any real <a href="..."> inside it (like career.html)
+    nav.addEventListener("click", (e) => {
+      const a = e.target.closest("a[href]");
+      if (!a) return;
+      const href = (a.getAttribute("href") || "").trim();
+      if (!href || href === "#") return;
+
+      nav.classList.remove("is-open");
+      navToggle.setAttribute("aria-expanded", "false");
+    });
   }
 
   /* ---------------------------------------------------------
@@ -247,7 +274,6 @@ document.addEventListener("DOMContentLoaded", () => {
       const budgetVal = budgetEl ? budgetEl.value : "";
       const messageVal = messageEl ? messageEl.value.trim() : "";
 
-      // Require valid email
       if (!nameVal || !emailVal || !emailPattern.test(emailVal)) {
         alert("Please enter a valid name and email so Agora can respond.");
         return;
@@ -275,40 +301,14 @@ document.addEventListener("DOMContentLoaded", () => {
         description: "A new client filled out the contact form on the Agora site.",
         color: 0x00c8ff,
         fields: [
-          {
-            name: "Name",
-            value: nameVal || "N/A",
-            inline: true,
-          },
-          {
-            name: "Email",
-            value: emailVal || "N/A",
-            inline: true,
-          },
-          {
-            name: "Team / Brand / Project",
-            value: orgVal || "N/A",
-            inline: false,
-          },
-          {
-            name: "Primary Need",
-            value: focusLabel,
-            inline: true,
-          },
-          {
-            name: "Rough Budget",
-            value: budgetLabel,
-            inline: true,
-          },
-          {
-            name: "Mission / Details",
-            value: messageVal || "No message provided.",
-            inline: false,
-          },
+          { name: "Name", value: nameVal || "N/A", inline: true },
+          { name: "Email", value: emailVal || "N/A", inline: true },
+          { name: "Team / Brand / Project", value: orgVal || "N/A", inline: false },
+          { name: "Primary Need", value: focusLabel, inline: true },
+          { name: "Rough Budget", value: budgetLabel, inline: true },
+          { name: "Mission / Details", value: messageVal || "No message provided.", inline: false },
         ],
-        footer: {
-          text: "Agora Exchange · From concept to code",
-        },
+        footer: { text: "Agora Exchange · From concept to code" },
         timestamp: new Date().toISOString(),
       };
 
@@ -320,21 +320,13 @@ document.addEventListener("DOMContentLoaded", () => {
       try {
         const res = await fetch(DISCORD_WEBHOOK_URL, {
           method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
+          headers: { "Content-Type": "application/json" },
           body: JSON.stringify(payload),
         });
 
         if (!res.ok) {
-          console.error(
-            "Discord webhook error (contact):",
-            res.status,
-            res.statusText
-          );
-          alert(
-            "We hit an issue sending your request to Agora. Please try again in a moment."
-          );
+          console.error("Discord webhook error (contact):", res.status, res.statusText);
+          alert("We hit an issue sending your request to Agora. Please try again in a moment.");
           return;
         }
 
@@ -342,9 +334,7 @@ document.addEventListener("DOMContentLoaded", () => {
         alert("Thank you. Your details were sent to Agora successfully.");
       } catch (err) {
         console.error("Discord webhook fetch failed (contact):", err);
-        alert(
-          "Something went wrong while sending your request. Check your connection and try again."
-        );
+        alert("Something went wrong while sending your request. Check your connection and try again.");
       }
     });
   }
@@ -360,19 +350,14 @@ document.addEventListener("DOMContentLoaded", () => {
       btn.addEventListener("click", () => {
         const filter = btn.getAttribute("data-filter");
 
-        // toggle active state
-        filterButtons.forEach((b) => {
-          b.classList.toggle("is-active", b === btn);
-        });
+        filterButtons.forEach((b) => b.classList.toggle("is-active", b === btn));
 
-        // show / hide gallery items
         galleryItems.forEach((item) => {
           const category = item.getAttribute("data-category");
           const shouldShow = filter === "all" || category === filter;
           item.classList.toggle("is-hidden", !shouldShow);
         });
 
-        // scroll to top of gallery when changing filter (nice UX)
         const gallerySection = document.querySelector(".view-gallery.is-active");
         if (gallerySection) {
           const top = gallerySection.offsetTop - 80;
@@ -431,15 +416,10 @@ document.addEventListener("DOMContentLoaded", () => {
     function getRandomSignal() {
       const pick = signals[Math.floor(Math.random() * signals.length)];
       const hours = Math.floor(Math.random() * 10) + 1; // 1–10 hours
-      const line = pick.line.replace(
-        "<hours>",
-        `${hours} hour${hours === 1 ? "" : "s"}`
-      );
-      return line;
+      return pick.line.replace("<hours>", `${hours} hour${hours === 1 ? "" : "s"}`);
     }
 
     function showHadesToast() {
-      // respect reduced motion users – still show but no slide animation
       const prefersReducedMotion =
         window.matchMedia &&
         window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -454,7 +434,6 @@ document.addEventListener("DOMContentLoaded", () => {
         hadesToast.classList.add("is-visible");
       }
 
-      // Auto-hide after ~4 seconds
       setTimeout(() => {
         hadesToast.classList.add("is-hiding");
         setTimeout(() => {
@@ -465,7 +444,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
     let hadesShown = false;
 
-    // trigger once shortly after initial load
     setTimeout(() => {
       if (!hadesShown) {
         hadesShown = true;
@@ -497,7 +475,6 @@ document.addEventListener("DOMContentLoaded", () => {
     const alreadySeen = localStorage.getItem(SHOWCASE_SEEN_KEY) === "true";
     if (alreadySeen) return;
 
-    // mark as seen so we only show this the first time
     localStorage.setItem(SHOWCASE_SEEN_KEY, "true");
     showcaseModal.classList.add("is-open");
   }
@@ -507,24 +484,15 @@ document.addEventListener("DOMContentLoaded", () => {
     showcaseModal.classList.remove("is-open");
   }
 
-  if (showcaseModalClose) {
-    showcaseModalClose.addEventListener("click", closeShowcaseModal);
-  }
+  if (showcaseModalClose) showcaseModalClose.addEventListener("click", closeShowcaseModal);
+  if (showcaseModalCta) showcaseModalCta.addEventListener("click", closeShowcaseModal);
 
-  if (showcaseModalCta) {
-    showcaseModalCta.addEventListener("click", closeShowcaseModal);
-  }
-
-  // Click outside the panel to close
   if (showcaseModal) {
     showcaseModal.addEventListener("click", (event) => {
-      if (event.target === showcaseModal) {
-        closeShowcaseModal();
-      }
+      if (event.target === showcaseModal) closeShowcaseModal();
     });
   }
 
-  // Escape key closes modal
   document.addEventListener("keydown", (event) => {
     if (
       event.key === "Escape" &&
@@ -535,14 +503,12 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-  // Any Showcase / Gallery trigger should be able to open it
   const showcaseTriggers = document.querySelectorAll(
     '[data-view="showcase"], [data-view="gallery"]'
   );
 
   showcaseTriggers.forEach((btn) => {
     btn.addEventListener("click", () => {
-      // let the view transition settle, then show modal (if first time)
       setTimeout(openShowcaseModalOnce, 600);
     });
   });
@@ -558,7 +524,6 @@ document.addEventListener("DOMContentLoaded", () => {
       const emailInput = footerForm.querySelector("#footer-email");
       const emailVal = emailInput ? emailInput.value.trim() : "";
 
-      // Require valid email
       if (!emailVal || !emailPattern.test(emailVal)) {
         alert("Please enter a valid email address to receive updates.");
         return;
@@ -570,20 +535,10 @@ document.addEventListener("DOMContentLoaded", () => {
           "A user requested to receive updates, product news, and possible discounts from Agora Exchange.",
         color: 0x00c8ff,
         fields: [
-          {
-            name: "Email",
-            value: emailVal,
-            inline: false,
-          },
-          {
-            name: "Source",
-            value: "Footer newsletter form on Agora site",
-            inline: false,
-          },
+          { name: "Email", value: emailVal, inline: false },
+          { name: "Source", value: "Footer newsletter form on Agora site", inline: false },
         ],
-        footer: {
-          text: "Agora Exchange · Signal, not noise.",
-        },
+        footer: { text: "Agora Exchange · Signal, not noise." },
         timestamp: new Date().toISOString(),
       };
 
@@ -595,33 +550,21 @@ document.addEventListener("DOMContentLoaded", () => {
       try {
         const res = await fetch(DISCORD_WEBHOOK_URL, {
           method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
+          headers: { "Content-Type": "application/json" },
           body: JSON.stringify(payload),
         });
 
         if (!res.ok) {
-          console.error(
-            "Discord webhook error (newsletter):",
-            res.status,
-            res.statusText
-          );
-          alert(
-            "We hit an issue adding this email to the updates queue. Please try again shortly."
-          );
+          console.error("Discord webhook error (newsletter):", res.status, res.statusText);
+          alert("We hit an issue adding this email to the updates queue. Please try again shortly.");
           return;
         }
 
         footerForm.reset();
-        alert(
-          "Subscribed. You’ll be added to the Agora updates list for news, releases, and occasional discounts."
-        );
+        alert("Subscribed. You’ll be added to the Agora updates list for news, releases, and occasional discounts.");
       } catch (err) {
         console.error("Discord webhook fetch failed (newsletter):", err);
-        alert(
-          "Something went wrong while sending this signup. Check your connection and try again."
-        );
+        alert("Something went wrong while sending this signup. Check your connection and try again.");
       }
     });
   }
@@ -641,7 +584,6 @@ document.addEventListener("DOMContentLoaded", () => {
     const appShell = document.getElementById("app-shell");
     if (!appShell) return;
 
-    // Create background canvas
     const canvas = document.createElement("canvas");
     canvas.id = "agora-bg-mesh";
     Object.assign(canvas.style, {
@@ -651,13 +593,11 @@ document.addEventListener("DOMContentLoaded", () => {
       height: "100%",
       zIndex: "0",
       pointerEvents: "none",
-      opacity: "0.45", // subtle
+      opacity: "0.45",
     });
 
-    // Put canvas at the very back
     document.body.insertBefore(canvas, document.body.firstChild);
 
-    // Make sure the main app sits above it
     appShell.style.position = appShell.style.position || "relative";
     appShell.style.zIndex = "1";
 
@@ -672,14 +612,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
     function initNodes() {
       nodes.length = 0;
-      const count =
-        window.innerWidth < 768 ? NODE_COUNT_MOBILE : NODE_COUNT_DESKTOP;
+      const count = window.innerWidth < 768 ? NODE_COUNT_MOBILE : NODE_COUNT_DESKTOP;
 
       for (let i = 0; i < count; i++) {
         nodes.push({
           x: Math.random() * width,
           y: Math.random() * height,
-          vx: (Math.random() - 0.5) * 0.3, // slow drift
+          vx: (Math.random() - 0.5) * 0.3,
           vy: (Math.random() - 0.5) * 0.3,
           r: 1.2 + Math.random() * 1.2,
           hueShift: Math.random(),
@@ -694,7 +633,6 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     window.addEventListener("resize", () => {
-      // Throttle resize a bit
       clearTimeout(resize._t);
       resize._t = setTimeout(resize, 150);
     });
@@ -702,7 +640,6 @@ document.addEventListener("DOMContentLoaded", () => {
     function draw() {
       ctx.clearRect(0, 0, width, height);
 
-      // Soft vignette gradient
       const gradient = ctx.createRadialGradient(
         width * 0.5,
         height * 0.2,
@@ -716,7 +653,6 @@ document.addEventListener("DOMContentLoaded", () => {
       ctx.fillStyle = gradient;
       ctx.fillRect(0, 0, width, height);
 
-      // Draw connections
       for (let i = 0; i < nodes.length; i++) {
         const a = nodes[i];
         for (let j = i + 1; j < nodes.length; j++) {
@@ -727,7 +663,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
           if (dist < LINK_DISTANCE) {
             const alpha = 1 - dist / LINK_DISTANCE;
-            ctx.strokeStyle = `rgba(100, 255, 218, ${alpha * 0.18})`; // teal
+            ctx.strokeStyle = `rgba(100, 255, 218, ${alpha * 0.18})`;
             ctx.lineWidth = 1;
             ctx.beginPath();
             ctx.moveTo(a.x, a.y);
@@ -737,17 +673,14 @@ document.addEventListener("DOMContentLoaded", () => {
         }
       }
 
-      // Draw nodes
       for (let i = 0; i < nodes.length; i++) {
         const n = nodes[i];
 
-        // Soft glow
         ctx.beginPath();
         ctx.fillStyle = "rgba(15, 23, 42, 0.6)";
         ctx.arc(n.x, n.y, n.r * 3.2, 0, Math.PI * 2);
         ctx.fill();
 
-        // Core dot (mix of teal + subtle blue)
         const t = n.hueShift;
         const teal = `rgba(100,255,218,0.85)`;
         const blue = `rgba(130,160,255,0.9)`;
@@ -764,7 +697,6 @@ document.addEventListener("DOMContentLoaded", () => {
         n.x += n.vx;
         n.y += n.vy;
 
-        // Gentle wrap around edges
         if (n.x < -20) n.x = width + 20;
         if (n.x > width + 20) n.x = -20;
         if (n.y < -20) n.y = height + 20;
@@ -778,32 +710,30 @@ document.addEventListener("DOMContentLoaded", () => {
       requestAnimationFrame(loop);
     }
 
-    // Init & start
     resize();
     loop();
   });
 })();
 
 // ======================================================
-// Force scroll-to-top on any internal "page" change
-// (for anything using data-view="...")
+// Force scroll-to-top on internal SPA view change only
 // ======================================================
 document.addEventListener("click", (event) => {
   const trigger = event.target.closest("[data-view]");
   if (!trigger) return;
 
+  // ✅ Don’t mess with real navigation like career.html
+  if (trigger.tagName && trigger.tagName.toLowerCase() === "a") {
+    const href = (trigger.getAttribute("href") || "").trim();
+    if (href && href !== "#") return;
+  }
+
   const targetView = trigger.getAttribute("data-view");
   if (!targetView) return;
 
-  // Tiny delay so the view swap logic runs first
   setTimeout(() => {
-    // Try scrolling the main window
-    window.scrollTo({
-      top: 0,
-      behavior: "smooth",
-    });
+    window.scrollTo({ top: 0, behavior: "smooth" });
 
-    // Also try scrolling main app containers, in case they’re scrollable
     const possibleScrollers = [
       document.querySelector(".site-main"),
       document.querySelector(".app-shell"),
@@ -813,10 +743,7 @@ document.addEventListener("click", (event) => {
 
     possibleScrollers.forEach((el) => {
       if (!el || typeof el.scrollTo !== "function") return;
-      el.scrollTo({
-        top: 0,
-        behavior: "smooth",
-      });
+      el.scrollTo({ top: 0, behavior: "smooth" });
     });
   }, 10);
 });
@@ -825,90 +752,89 @@ document.addEventListener("click", (event) => {
    AGORA EXCHANGE — Showcase Modal Mesh Background
    Re-uses the main site mesh logic but scoped to modal only
    ========================================================= */
-
 (function () {
-  const modalPanel = document.querySelector(".showcase-modal-panel");
-  const modalCanvas = document.getElementById("showcase-mesh");
-  if (!modalPanel || !modalCanvas) return;
+  document.addEventListener("DOMContentLoaded", () => {
+    const modalPanel = document.querySelector(".showcase-modal-panel");
+    const modalCanvas = document.getElementById("showcase-mesh");
+    if (!modalPanel || !modalCanvas) return;
 
-  const ctx = modalCanvas.getContext("2d");
+    const ctx = modalCanvas.getContext("2d");
 
-  function resizeCanvas() {
-    modalCanvas.width = modalPanel.offsetWidth;
-    modalCanvas.height = modalPanel.offsetHeight;
-  }
-
-  resizeCanvas();
-  window.addEventListener("resize", resizeCanvas);
-
-  const nodes = [];
-  const LINK_DIST = 120;
-  const COUNT = 26;
-
-  function init() {
-    nodes.length = 0;
-    for (let i = 0; i < COUNT; i++) {
-      nodes.push({
-        x: Math.random() * modalCanvas.width,
-        y: Math.random() * modalCanvas.height,
-        vx: (Math.random() - 0.5) * 0.25,
-        vy: (Math.random() - 0.5) * 0.25,
-        r: 1 + Math.random() * 1.2
-      });
+    function resizeCanvas() {
+      modalCanvas.width = modalPanel.offsetWidth;
+      modalCanvas.height = modalPanel.offsetHeight;
     }
-  }
 
-  function draw() {
-    ctx.clearRect(0, 0, modalCanvas.width, modalCanvas.height);
+    resizeCanvas();
+    window.addEventListener("resize", resizeCanvas);
 
-    // Links
-    for (let i = 0; i < nodes.length; i++) {
-      for (let j = i + 1; j < nodes.length; j++) {
-        const a = nodes[i];
-        const b = nodes[j];
-        const dx = a.x - b.x;
-        const dy = a.y - b.y;
-        const dist = Math.sqrt(dx * dx + dy * dy);
+    const nodes = [];
+    const LINK_DIST = 120;
+    const COUNT = 26;
 
-        if (dist < LINK_DIST) {
-          const alpha = 1 - dist / LINK_DIST;
-          ctx.strokeStyle = `rgba(100,255,218,${alpha * 0.18})`;
-          ctx.lineWidth = 1;
-          ctx.beginPath();
-          ctx.moveTo(a.x, a.y);
-          ctx.lineTo(b.x, b.y);
-          ctx.stroke();
-        }
+    function init() {
+      nodes.length = 0;
+      for (let i = 0; i < COUNT; i++) {
+        nodes.push({
+          x: Math.random() * modalCanvas.width,
+          y: Math.random() * modalCanvas.height,
+          vx: (Math.random() - 0.5) * 0.25,
+          vy: (Math.random() - 0.5) * 0.25,
+          r: 1 + Math.random() * 1.2,
+        });
       }
     }
 
-    // Nodes
-    nodes.forEach((n) => {
-      ctx.beginPath();
-      ctx.fillStyle = "rgba(100,255,218,0.9)";
-      ctx.arc(n.x, n.y, n.r, 0, Math.PI * 2);
-      ctx.fill();
-    });
-  }
+    function draw() {
+      ctx.clearRect(0, 0, modalCanvas.width, modalCanvas.height);
 
-  function update() {
-    nodes.forEach((n) => {
-      n.x += n.vx;
-      n.y += n.vy;
+      for (let i = 0; i < nodes.length; i++) {
+        for (let j = i + 1; j < nodes.length; j++) {
+          const a = nodes[i];
+          const b = nodes[j];
+          const dx = a.x - b.x;
+          const dy = a.y - b.y;
+          const dist = Math.sqrt(dx * dx + dy * dy);
 
-      if (n.x < -10) n.x = modalCanvas.width + 10;
-      if (n.x > modalCanvas.width + 10) n.x = -10;
-      if (n.y < -10) n.y = modalCanvas.height + 10;
-      if (n.y > modalCanvas.height + 10) n.y = -10;
-    });
-  }
+          if (dist < LINK_DIST) {
+            const alpha = 1 - dist / LINK_DIST;
+            ctx.strokeStyle = `rgba(100,255,218,${alpha * 0.18})`;
+            ctx.lineWidth = 1;
+            ctx.beginPath();
+            ctx.moveTo(a.x, a.y);
+            ctx.lineTo(b.x, b.y);
+            ctx.stroke();
+          }
+        }
+      }
 
-  function loop() {
-    update();
-    draw();
-    requestAnimationFrame(loop);
-  }
+      nodes.forEach((n) => {
+        ctx.beginPath();
+        ctx.fillStyle = "rgba(100,255,218,0.9)";
+        ctx.arc(n.x, n.y, n.r, 0, Math.PI * 2);
+        ctx.fill();
+      });
+    }
 
-  init();
-  loop();
+    function update() {
+      nodes.forEach((n) => {
+        n.x += n.vx;
+        n.y += n.vy;
+
+        if (n.x < -10) n.x = modalCanvas.width + 10;
+        if (n.x > modalCanvas.width + 10) n.x = -10;
+        if (n.y < -10) n.y = modalCanvas.height + 10;
+        if (n.y > modalCanvas.height + 10) n.y = -10;
+      });
+    }
+
+    function loop() {
+      update();
+      draw();
+      requestAnimationFrame(loop);
+    }
+
+    init();
+    loop();
+  });
 })();
