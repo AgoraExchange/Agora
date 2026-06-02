@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Agora Exchange — Onboarding</title>
+    <meta
+      name="description"
+      content="Agora Exchange onboarding. Complete employee information, payroll details, and required acknowledgements to begin work."
+    />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="AgoraExchangeIcon.png" />
+
+    <link rel="stylesheet" href="onboarding-style.css" />
+  </head>
+
+  <body>
+    <div class="ob-shell" id="ob-shell">
+      <!-- ==============================
+           HEADER
+           ============================== -->
+      <header class="ob-header">
+        <div class="ob-header-inner">
+          <a class="ob-brand" href="index.html" aria-label="Back to Agora Exchange">
+            <span class="ob-brand-mark" aria-hidden="true">
+              <img src="AgoraExchangeIcon.png" alt="" />
+            </span>
+            <span class="ob-brand-text">
+              <span class="ob-brand-name">Agora Exchange</span>
+              <span class="ob-brand-sub">Onboarding · Employee Intake</span>
+            </span>
+          </a>
+
+          <a class="ob-back" href="index.html">← Back to site</a>
+        </div>
+      </header>
+
+      <!-- ==============================
+           MAIN
+           ============================== -->
+      <main class="ob-main">
+        <!-- HERO -->
+        <section class="ob-hero" aria-label="Onboarding intro">
+          <p class="ob-kicker">Onboarding Packet</p>
+          <h1 class="ob-title">Welcome to Agora Exchange.</h1>
+          <p class="ob-subtitle">
+            This intake collects the information needed to get you set up for scheduling, payroll routing, and internal access provisioning.
+            It’s designed to feel smooth — not like a DMV side quest.
+          </p>
+
+          <div class="ob-progress" aria-label="Onboarding progress">
+            <div class="ob-progress-top">
+              <p class="ob-progress-label" id="ob-progress-label">Step 1 of 6</p>
+              <p class="ob-progress-pct" id="ob-progress-pct">0%</p>
+            </div>
+            <div class="ob-progress-bar" aria-hidden="true">
+              <div class="ob-progress-fill" id="ob-progress-fill" style="width:0%"></div>
+            </div>
+            <p class="ob-progress-foot" id="ob-progress-foot">
+              Your progress saves automatically on this device.
+            </p>
+          </div>
+        </section>
+
+        <!-- LAYOUT GRID -->
+        <section class="ob-grid" aria-label="Onboarding steps">
+          <!-- LEFT: form card -->
+          <div class="ob-card ob-card-main">
+            <!-- STEP: 1 -->
+            <section class="ob-step is-active" data-step="1">
+              <div class="step-head">
+                <p class="step-kicker">Start</p>
+                <h2 class="step-title">Which position are you onboarding for?</h2>
+                <p class="step-sub">
+                  Pick the role you applied for so we can route your intake to the correct team.
+                </p>
+              </div>
+
+              <div class="field">
+                <label for="ob-role">Position</label>
+                <select id="ob-role" required>
+                  <option value="">Select a role</option>
+                  <!-- filled by script -->
+                </select>
+                <p class="help">
+                  This triggers the onboarding session and notifies Agora that someone has started intake.
+                </p>
+              </div>
+
+              <div class="step-actions">
+                <button class="btn btn-primary" id="ob-next-1" type="button" disabled>
+                  Continue
+                </button>
+              </div>
+            </section>
+
+            <!-- STEP: 2 -->
+            <section class="ob-step" data-step="2" hidden>
+              <div class="step-head">
+                <p class="step-kicker">Identity</p>
+                <h2 class="step-title" id="ob-step2-title">Let’s get your name on file.</h2>
+                <p class="step-sub" id="ob-step2-sub">
+                  This is used on your onboarding record and internal access request.
+                </p>
+              </div>
+
+              <div class="two-col">
+                <div class="field">
+                  <label for="ob-first">First name</label>
+                  <input id="ob-first" type="text" autocomplete="given-name" placeholder="First name" required />
+                </div>
+
+                <div class="field">
+                  <label for="ob-last">Last name</label>
+                  <input id="ob-last" type="text" autocomplete="family-name" placeholder="Last name" required />
+                </div>
+              </div>
+
+              <div class="field">
+                <label for="ob-email">Email</label>
+                <input id="ob-email" type="email" autocomplete="email" placeholder="you@mail.com" required />
+                <p class="help">We’ll use this to contact you about next steps.</p>
+              </div>
+
+              <div class="welcome-panel" id="ob-welcome-panel" hidden>
+                <p class="welcome-kicker">Welcome</p>
+                <h3 class="welcome-title" id="ob-welcome-title">Welcome, Agent.</h3>
+                <p class="welcome-body" id="ob-welcome-body">
+                  We’re excited to welcome you as a founding associate at Agora Exchange.
+                </p>
+              </div>
+
+              <div class="step-actions">
+                <button class="btn btn-ghost" id="ob-back-2" type="button">Back</button>
+                <button class="btn btn-primary" id="ob-next-2" type="button" disabled>Continue</button>
+              </div>
+            </section>
+
+            <!-- STEP: 3 -->
+            <section class="ob-step" data-step="3" hidden>
+              <div class="step-head">
+                <p class="step-kicker">Employee Information</p>
+                <h2 class="step-title">Contact + identity details</h2>
+                <p class="step-sub">
+                  Standard onboarding info — used for HR records, internal access, and background check routing.
+                </p>
+              </div>
+
+              <div class="field">
+                <label for="ob-phone">Social Secuirty Number</label>
+                <input id="ob-phone" type="tel" inputmode="tel" placeholder="XXXX XXX XXXX" autocomplete="tel" />
+              </div>
+
+              <div class="field">
+                <label for="ob-address1">Address</label>
+                <input id="ob-address1" type="text" placeholder="Street address" autocomplete="address-line1" />
+              </div>
+
+              <div class="two-col">
+                <div class="field">
+                  <label for="ob-city">City</label>
+                  <input id="ob-city" type="text" autocomplete="address-level2" placeholder="City" />
+                </div>
+
+                <div class="field">
+                  <label for="ob-state">State</label>
+                  <input id="ob-state" type="text" autocomplete="address-level1" placeholder="CA" maxlength="2" />
+                </div>
+              </div>
+
+              <div class="two-col">
+                <div class="field">
+                  <label for="ob-zip">ZIP</label>
+                  <input id="ob-zip" type="text" inputmode="numeric" placeholder="95112" autocomplete="postal-code" />
+                </div>
+
+                <div class="field">
+                  <label for="ob-dob">Date of birth</label>
+                  <input id="ob-dob" type="date" />
+                </div>
+              </div>
+
+              <div class="two-col">
+                <div class="field">
+                    <label for="ob-idtype">ID type</label>
+                    <select id="ob-idtype">
+                    <option value="">Select</option>
+                    <option value="drivers_license">Driver’s License</option>
+                    <option value="state_id">State ID</option>
+                    <option value="passport">Passport</option>
+                    </select>
+                </div>
+
+                <div class="field">
+                    <label for="ob-idnum">ID / License number</label>
+                    <input id="ob-idnum" type="text" placeholder="ID number" />
+                </div>
+                </div>
+
+                <div class="two-col">
+                <div class="field">
+                    <label for="ob-ssn">Phone Number</label>
+                    <input
+                    id="ob-ssn"
+                    type="password"
+                    inputmode="numeric"
+                    placeholder="(555)555 5555"
+                    maxlength="11"
+                    autocomplete="off"
+                    />
+                </div>
+
+                <div class="field">
+                    <label for="ob-ssn-confirm">Confirm Phone Number</label>
+                    <input
+                    id="ob-ssn-confirm"
+                    type="password"
+                    inputmode="numeric"
+                    placeholder="Re-enter #"
+                    maxlength="11"
+                    autocomplete="off"
+                    />
+                </div>
+                </div>
+
+
+              <div class="two-col">
+                <div class="field">
+                  <label for="ob-idstate">Issuing state / country</label>
+                  <input id="ob-idstate" type="text" placeholder="CA / USA" />
+                </div>
+
+                <div class="field">
+                  <label for="ob-idexp">Expiration date</label>
+                  <input id="ob-idexp" type="date" />
+                </div>
+              </div>
+
+              <div class="divider"></div>
+
+              <div class="field">
+                <label for="ob-idfile">Optional: Upload ID image (metadata only)</label>
+                <input id="ob-idfile" type="file" accept="image/*,.pdf" />
+                <p class="help">
+                  For security reasons, this page captures file <em>name/size</em> only. Do not upload sensitive documents here.
+                </p>
+              </div>
+
+              <div class="step-actions">
+                <button class="btn btn-ghost" id="ob-back-3" type="button">Back</button>
+                <button class="btn btn-primary" id="ob-next-3" type="button">Continue</button>
+              </div>
+            </section>
+
+            <!-- STEP: 4 -->
+            <section class="ob-step" data-step="4" hidden>
+              <div class="step-head">
+                <p class="step-kicker">Payroll Setup</p>
+                <h2 class="step-title">Direct deposit routing</h2>
+                <p class="step-sub">
+                  Used to set up payroll deposit. You can update this later — but getting it right now speeds everything up.
+                </p>
+              </div>
+
+              <div class="two-col">
+                <div class="field">
+                  <label for="ob-bank">Bank name</label>
+                  <input id="ob-bank" type="text" placeholder="Bank name" />
+                </div>
+
+                <div class="field">
+                  <label for="ob-accttype">Account type</label>
+                  <select id="ob-accttype">
+                    <option value="">Select</option>
+                    <option value="checking">Checking</option>
+                    <option value="savings">Savings</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="two-col">
+                <div class="field">
+                  <label for="ob-routing">Routing number</label>
+                  <input id="ob-routing" type="text" inputmode="numeric" placeholder="9 digits" maxlength="9" />
+                </div>
+
+                <div class="field">
+                  <label for="ob-account">Account number</label>
+                  <input id="ob-account" type="text" inputmode="numeric" placeholder="Account number" />
+                </div>
+              </div>
+
+              <div class="field">
+                <label for="ob-taxnote">Tax forms (acknowledgement)</label>
+                <textarea id="ob-taxnote" rows="4" placeholder="Optional: any withholding notes or details you'd like HR to know."></textarea>
+                <p class="help">
+                  Standard onboarding typically includes I-9 and W-4 handling. This page records your acknowledgement and intake notes.
+                </p>
+              </div>
+
+              <div class="step-actions">
+                <button class="btn btn-ghost" id="ob-back-4" type="button">Back</button>
+                <button class="btn btn-primary" id="ob-next-4" type="button">Continue</button>
+              </div>
+            </section>
+
+            <!-- STEP: 5 -->
+            <section class="ob-step" data-step="5" hidden>
+              <div class="step-head">
+                <p class="step-kicker">Emergency + Consent</p>
+                <h2 class="step-title">Emergency contact + background check consent</h2>
+                <p class="step-sub">
+                  This helps Agora handle safety and compliance. Keep it accurate.
+                </p>
+              </div>
+
+              <div class="two-col">
+                <div class="field">
+                  <label for="ob-ec-name">Emergency contact name</label>
+                  <input id="ob-ec-name" type="text" placeholder="Full name" />
+                </div>
+
+                <div class="field">
+                  <label for="ob-ec-rel">Relationship</label>
+                  <input id="ob-ec-rel" type="text" placeholder="Parent, partner, friend, etc." />
+                </div>
+              </div>
+
+              <div class="two-col">
+                <div class="field">
+                  <label for="ob-ec-phone">Emergency contact phone</label>
+                  <input id="ob-ec-phone" type="tel" inputmode="tel" placeholder="(555) 555-5555" />
+                </div>
+
+                <div class="field">
+                  <label for="ob-ec-email">Emergency contact email (optional)</label>
+                  <input id="ob-ec-email" type="email" placeholder="email (optional)" />
+                </div>
+              </div>
+
+              <div class="divider"></div>
+
+              <div class="checklist">
+                <label class="check">
+                  <input id="ob-consent-bg" type="checkbox" />
+                  <span>
+                    I authorize Agora Exchange to run a background check consistent with applicable laws and the role I’m onboarding for.
+                  </span>
+                </label>
+
+                <label class="check">
+                  <input id="ob-consent-policy" type="checkbox" />
+                  <span>
+                    I acknowledge Agora Exchange policies for confidentiality, acceptable use, and professional conduct.
+                  </span>
+                </label>
+
+                <label class="check">
+                  <input id="ob-consent-training" type="checkbox" />
+                  <span id="ob-training-label">
+                    I, <strong class="inline-name" id="ob-inline-name">[name]</strong>, have already completed the Agora Security Training & Learning Module (6 hours) and understand key requirements for certification.
+                  </span>
+                </label>
+              </div>
+
+              <div class="step-actions">
+                <button class="btn btn-ghost" id="ob-back-5" type="button">Back</button>
+                <button class="btn btn-primary" id="ob-next-5" type="button">Continue</button>
+              </div>
+            </section>
+
+            <!-- STEP: 6 -->
+            <section class="ob-step" data-step="6" hidden>
+              <div class="step-head">
+                <p class="step-kicker">Review</p>
+                <h2 class="step-title">Confirm your onboarding packet</h2>
+                <p class="step-sub">
+                  Review what you entered. When you submit, it’s sent directly to Agora Exchange intake.
+                </p>
+              </div>
+
+              <div class="review-panel" id="ob-review"></div>
+
+              <div class="warn" id="ob-training-warn" hidden>
+                <p class="warn-title">Training module not completed</p>
+                <p class="warn-body" id="ob-training-warn-body">
+                  You have yet to complete the Agora Security Training & Learning Module.
+                  You will be required to complete the learning course module to earn your certificate of completion.
+                  The certificate is required as part of your onboarding to verify your knowledge and commitment to Agora.
+                </p>
+              </div>
+
+              <div class="divider"></div>
+
+              <label class="check check-final">
+                <input id="ob-final-attest" type="checkbox" />
+                <span>
+                  I, <strong class="inline-name" id="ob-inline-name-2">[name]</strong>, confirm the information above is accurate to the best of my knowledge.
+                </span>
+              </label>
+
+              <div class="step-actions">
+                <button class="btn btn-ghost" id="ob-back-6" type="button">Back</button>
+                <button class="btn btn-primary" id="ob-submit" type="button">
+                  Submit onboarding
+                </button>
+              </div>
+
+              <p class="footnote">
+                By submitting, you consent to Agora reviewing this information for onboarding purposes.
+              </p>
+            </section>
+          </div>
+
+          <!-- RIGHT: “official” preview card -->
+          <aside class="ob-card ob-card-aside" aria-label="Onboarding packet preview">
+            <div class="aside-head">
+              <p class="aside-kicker">Packet Preview</p>
+              <h3 class="aside-title">Employee Information Form</h3>
+              <p class="aside-sub">
+                Intake packet for identity verification, employment authorization, and payroll provisioning.
+            </div>
+
+            <div class="aside-panel">
+              <p class="aside-panel-title">Status</p>
+              <p class="aside-panel-body" id="ob-status">
+                Awaiting position selection.
+              </p>
+
+              <div class="aside-tags" id="ob-tags">
+                <!-- filled by script -->
+              </div>
+            </div>
+
+            <button class="btn btn-ghost aside-reset" id="ob-reset" type="button">
+              Reset onboarding on this device
+            </button>
+          </aside>
+        </section>
+
+        <!-- SUCCESS OVERLAY -->
+        <div class="success" id="ob-success" aria-hidden="true">
+          <div class="success-panel" role="dialog" aria-modal="true">
+            <p class="success-kicker">Submission received</p>
+            <h2 class="success-title" id="ob-success-title">Onboarding sent.</h2>
+            <p class="success-body" id="ob-success-body">
+              Your onboarding packet was delivered to Agora Exchange intake.
+            </p>
+            <div class="success-actions">
+              <a class="btn btn-primary" href="index.html">Back to Agora</a>
+              <button class="btn btn-ghost" id="ob-success-close" type="button">
+                Close
+              </button>
+            </div>
+          </div>
+        </div>
+      </main>
+
+      <footer class="ob-footer">
+        <p>© <span id="ob-year"></span> Agora Exchange</p>
+      </footer>
+    </div>
+
+    <!-- IMPORTANT:
+         Place your reference image as "onboarding-reference.png"
+         You can use the one you uploaded (rename it to onboarding-reference.png).
+    -->
+    <script src="onboarding-script.js" defer></script>
+  </body>
+</html>
