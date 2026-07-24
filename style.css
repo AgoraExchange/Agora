@@ -638,23 +638,28 @@ textarea {
 }
 
 .footer-links-grid {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  align-content: start;
-  column-gap: 0.9rem;
-  row-gap: 0.55rem;
+  display: block;
   min-width: 220px;
 }
 
 .footer-links-grid .footer-heading {
-  grid-column: 1 / -1;
-  margin-bottom: 0.15rem;
+  margin-bottom: 0.65rem;
 }
 
 .footer-links-grid .footer-link {
   width: auto;
   margin: 0;
   white-space: nowrap;
+}
+
+.footer-link-row {
+  display: flex;
+  align-items: center;
+  gap: 1.15rem;
+}
+
+.footer-link-row + .footer-link-row {
+  margin-top: 0.55rem;
 }
 
 .footer-form {
@@ -1144,6 +1149,7 @@ textarea {
   height: 100%;
   object-fit: cover;
   display: block;
+  cursor: zoom-in;
 }
 
 .gallery-title {
@@ -1164,7 +1170,12 @@ textarea {
   cursor: pointer;
 }
 
-.gallery-item-product:focus-visible {
+.gallery-item-inquiry {
+  cursor: pointer;
+}
+
+.gallery-item-product:focus-visible,
+.gallery-item-inquiry:focus-visible {
   outline: 2px solid #64ffda;
   outline-offset: 4px;
 }
@@ -1601,6 +1612,72 @@ body.purchase-consent-open {
   width: 100%;
   justify-content: center;
   margin-top: 1rem;
+}
+
+#purchase-consent-continue[hidden] {
+  display: none !important;
+}
+
+body.image-lightbox-open {
+  overflow: hidden;
+}
+
+.image-lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 2050;
+  display: none;
+  background: rgba(0, 0, 0, 0.94);
+  backdrop-filter: blur(12px);
+}
+
+.image-lightbox.is-open {
+  display: block;
+}
+
+.image-lightbox-panel,
+.image-lightbox-stage {
+  width: 100%;
+  height: 100%;
+}
+
+.image-lightbox-stage {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: auto;
+  padding: 4.5rem 1.25rem 1.25rem;
+}
+
+.image-lightbox-img {
+  display: block;
+  max-width: min(96vw, 1500px);
+  max-height: calc(100vh - 5.75rem);
+  object-fit: contain;
+  border-radius: 0.75rem;
+  box-shadow: 0 30px 100px rgba(0, 0, 0, 0.9);
+}
+
+.image-lightbox-close {
+  position: fixed;
+  top: 1rem;
+  right: 1rem;
+  z-index: 1;
+  width: 2.75rem;
+  height: 2.75rem;
+  border: 1px solid rgba(100, 255, 218, 0.55);
+  border-radius: 999px;
+  background: rgba(2, 6, 23, 0.94);
+  color: #f8fafc;
+  font-size: 1.55rem;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.image-lightbox-close:hover,
+.image-lightbox-close:focus-visible {
+  border-color: #64ffda;
+  background: rgba(15, 23, 42, 0.98);
 }
 
 @media (max-width: 760px) {

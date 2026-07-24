@@ -368,6 +368,104 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   /* ---------------------------------------------------------
+     Showcase image viewer and inquiry routing
+     --------------------------------------------------------- */
+  const imageLightbox = document.getElementById("image-lightbox");
+  const imageLightboxImage = document.getElementById("image-lightbox-img");
+  const imageLightboxClose = document.getElementById("image-lightbox-close");
+  const galleryImages = document.querySelectorAll(".gallery-item .gallery-figure img");
+  let activeGalleryImage = null;
+
+  function openImageLightbox(image) {
+    if (!imageLightbox || !imageLightboxImage || !image) return;
+    activeGalleryImage = image;
+    imageLightboxImage.src = image.currentSrc || image.src;
+    imageLightboxImage.alt = image.alt || "Expanded showcase image";
+    imageLightbox.classList.add("is-open");
+    imageLightbox.setAttribute("aria-hidden", "false");
+    document.body.classList.add("image-lightbox-open");
+    imageLightboxClose?.focus({ preventScroll: true });
+  }
+
+  function closeImageLightbox() {
+    if (!imageLightbox) return;
+    imageLightbox.classList.remove("is-open");
+    imageLightbox.setAttribute("aria-hidden", "true");
+    document.body.classList.remove("image-lightbox-open");
+    activeGalleryImage?.focus({ preventScroll: true });
+    activeGalleryImage = null;
+  }
+
+  galleryImages.forEach((image) => {
+    image.tabIndex = 0;
+    image.setAttribute("role", "button");
+    image.setAttribute("aria-label", `View full-size image: ${image.alt || "Showcase item"}`);
+    image.addEventListener("click", (event) => {
+      event.stopPropagation();
+      openImageLightbox(image);
+    });
+    image.addEventListener("keydown", (event) => {
+      if (event.key === "Enter" || event.key === " ") {
+        event.preventDefault();
+        event.stopPropagation();
+        openImageLightbox(image);
+      }
+    });
+  });
+
+  imageLightboxClose?.addEventListener("click", closeImageLightbox);
+  imageLightbox?.addEventListener("click", (event) => {
+    if (event.target === imageLightbox) closeImageLightbox();
+  });
+
+  function openGalleryInquiry(card) {
+    if (!card || !contactForm) return;
+    const title = card.querySelector(".gallery-title")?.textContent.trim() || "this item";
+    const category = card.dataset.category || "showcase";
+    const typeLabels = {
+      software: "Software",
+      websites: "Website",
+      tinker: "Tinker project",
+      tools: "Tool",
+    };
+    const focusValues = {
+      software: "ops-console",
+      websites: "cyber-landing",
+      tinker: "other",
+      tools: "script-kit",
+    };
+    const typeLabel = typeLabels[category] || "Item";
+    const focusSelect = contactForm.querySelector("#contact-focus");
+    const messageField = contactForm.querySelector("#contact-message");
+
+    if (focusSelect) focusSelect.value = focusValues[category] || "other";
+    if (messageField) {
+      messageField.value =
+        `I'm interested in the ${typeLabel} “${title}” listed in your Showcase.\n\n` +
+        "I'd like to discuss availability, pricing, and the best way to purchase or customize it. " +
+        "Here are a few details about what I need:";
+    }
+    setActiveView("contact");
+    requestAnimationFrame(() => messageField?.focus({ preventScroll: true }));
+  }
+
+  galleryItems.forEach((card) => {
+    if (card.hasAttribute("data-product")) return;
+    card.classList.add("gallery-item-inquiry");
+    card.setAttribute("role", "button");
+    card.tabIndex = 0;
+    const title = card.querySelector(".gallery-title")?.textContent.trim() || "showcase item";
+    card.setAttribute("aria-label", `Ask Agora about ${title}`);
+    card.addEventListener("click", () => openGalleryInquiry(card));
+    card.addEventListener("keydown", (event) => {
+      if (event.key === "Enter" || event.key === " ") {
+        event.preventDefault();
+        openGalleryInquiry(card);
+      }
+    });
+  });
+
+  /* ---------------------------------------------------------
      Purchasable Tool Details
      --------------------------------------------------------- */
   const productModal = document.getElementById("product-modal");
@@ -437,12 +535,20 @@ document.addEventListener("DOMContentLoaded", () => {
     activeProductCard = null;
   }
 
+  function activateProductCard(card) {
+    if ((card.dataset.checkoutUrl || "").trim()) {
+      openProductModal(card);
+    } else {
+      openGalleryInquiry(card);
+    }
+  }
+
   productCards.forEach((card) => {
-    card.addEventListener("click", () => openProductModal(card));
+    card.addEventListener("click", () => activateProductCard(card));
     card.addEventListener("keydown", (event) => {
       if (event.key === "Enter" || event.key === " ") {
         event.preventDefault();
-        openProductModal(card);
+        activateProductCard(card);
       }
     });
   });
@@ -466,6 +572,10 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape" && imageLightbox?.classList.contains("is-open")) {
+      closeImageLightbox();
+      return;
+    }
     if (
       event.key === "Escape" &&
       productModal?.classList.contains("is-open") &&
