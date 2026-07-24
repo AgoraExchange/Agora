@@ -575,9 +575,8 @@
               <p class="view-kicker">Gallery</p>
               <h2 class="view-title">Selected builds, tools, and hardware.</h2>
               <p class="view-subtitle">
-                A visual snapshot of some of the websites, software, and tinker projects
-                Agora has brought to life. Images are grouped by discipline so you can
-                see how we move across different lanes.
+                Explore selected websites, software, hardware, APIs, and useful tools
+                built by Agora. Filter by discipline, then open a tool to see access details.
               </p>
             </header>
 
@@ -593,6 +592,9 @@
               </button>
               <button class="filter-btn" type="button" data-filter="tinker">
                 Tinker
+              </button>
+              <button class="filter-btn" type="button" data-filter="tools">
+                Tools
               </button>
             </div>
 
@@ -671,6 +673,57 @@
                   A streamlined service-panel concept for managing social growth orders,
                   status tracking, balances, and customer-facing delivery workflows.
                 </p>
+              </article>
+
+              <article class="gallery-item" data-category="software">
+                <figure class="gallery-figure">
+                  <img
+                    src="photos/Software/software-6.png"
+                    alt="Network Vigilance smart home security command center"
+                    loading="lazy"
+                  />
+                </figure>
+                <h3 class="gallery-title">Network Vigilance</h3>
+                <p class="gallery-desc">
+                  An AI-assisted surveillance command center that unifies cameras and smart
+                  security devices, detects people and faces, and turns activity into
+                  searchable alerts and analytics.
+                </p>
+              </article>
+
+              <!-- PURCHASABLE TOOL ITEMS -->
+              <article
+                class="gallery-item gallery-item-product"
+                data-category="tools"
+                data-product
+                data-product-title="Plate Sniffer"
+                data-product-kicker="Network Vigilance extension"
+                data-product-description="Add vehicle intelligence to Network Vigilance with plate detection, timestamped sightings, and searchable traffic analytics across connected camera feeds."
+                data-product-billing="$175 due today, then $175 every month until canceled."
+                data-product-requirement="Requires Network Vigilance (Software-6). Your access key is delivered after the subscription is confirmed."
+                data-product-image="photos/Tools/tool-1.png"
+                data-checkout-url="https://square.link/u/hHHVX2gQ"
+                role="button"
+                tabindex="0"
+                aria-label="View Plate Sniffer purchase details"
+              >
+                <figure class="gallery-figure">
+                  <img
+                    src="photos/Tools/tool-1.png"
+                    alt="Plate Sniffer vehicle intelligence extension for Network Vigilance"
+                    loading="lazy"
+                  />
+                  <span class="tool-card-badge">Extension</span>
+                </figure>
+                <div class="tool-card-heading">
+                  <h3 class="gallery-title">Plate Sniffer</h3>
+                  <span class="tool-card-price">$175/mo</span>
+                </div>
+                <p class="gallery-desc">
+                  A vehicle intelligence extension that detects plates, logs sightings,
+                  and unlocks searchable traffic analytics inside Network Vigilance.
+                </p>
+                <span class="tool-card-action" aria-hidden="true">View access details &rarr;</span>
               </article>
 
               <!-- WEBSITE ITEMS -->
@@ -1143,6 +1196,54 @@
           <button id="showcase-modal-cta" class="btn btn-primary showcase-modal-cta" type="button">
             Browse the Showcase
           </button>
+        </div>
+      </div>
+
+      <!-- Purchasable Tool Details -->
+      <div id="product-modal" class="product-modal" aria-hidden="true">
+        <div
+          class="product-modal-panel"
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="product-modal-title"
+          aria-describedby="product-modal-description"
+        >
+          <button
+            id="product-modal-close"
+            class="product-modal-close"
+            type="button"
+            aria-label="Close tool details"
+          >
+            &times;
+          </button>
+
+          <div class="product-modal-media">
+            <img id="product-modal-image" src="" alt="" />
+          </div>
+
+          <div class="product-modal-content">
+            <p id="product-modal-kicker" class="product-modal-kicker"></p>
+            <h2 id="product-modal-title" class="product-modal-title"></h2>
+            <p id="product-modal-description" class="product-modal-description"></p>
+
+            <div class="product-modal-price">
+              <span class="product-modal-price-label">Subscription access</span>
+              <strong>$175 <small>/ month</small></strong>
+              <span id="product-modal-billing"></span>
+            </div>
+
+            <p id="product-modal-requirement" class="product-modal-requirement"></p>
+
+            <a
+              id="product-modal-checkout"
+              class="btn btn-primary product-modal-checkout is-disabled"
+              aria-disabled="true"
+              tabindex="-1"
+            >
+              Square link coming soon
+            </a>
+            <p class="product-modal-secure">Secure recurring checkout powered by Square.</p>
+          </div>
         </div>
       </div>
 
