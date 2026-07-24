@@ -575,9 +575,8 @@
               <p class="view-kicker">Gallery</p>
               <h2 class="view-title">Selected builds, tools, and hardware.</h2>
               <p class="view-subtitle">
-                A visual snapshot of some of the websites, software, and tinker projects
-                Agora has brought to life. Images are grouped by discipline so you can
-                see how we move across different lanes.
+                Explore selected websites, software, hardware, APIs, and useful tools
+                built by Agora. Filter by discipline, then open a tool to see access details.
               </p>
             </header>
 
@@ -593,6 +592,9 @@
               </button>
               <button class="filter-btn" type="button" data-filter="tinker">
                 Tinker
+              </button>
+              <button class="filter-btn" type="button" data-filter="tools">
+                Tools
               </button>
             </div>
 
@@ -670,6 +672,70 @@
                 <p class="gallery-desc">
                   A streamlined service-panel concept for managing social growth orders,
                   status tracking, balances, and customer-facing delivery workflows.
+                </p>
+              </article>
+
+              <article
+                class="gallery-item gallery-item-product"
+                data-category="software"
+                data-product
+                data-product-title="Network Vigilance"
+                data-product-kicker="Smart Security Platform"
+                data-product-price="$1,560"
+                data-product-description="Unify connected cameras and smart security devices with live monitoring, alerts, activity history, motion analytics, and person-event tracking. Vehicle and license plate detection are not included in the base plan."
+                data-product-billing="$1,560 due today, then $1,560 every month until canceled."
+                data-product-requirement="Software access is issued separately after the subscription is confirmed. Upgrade to Multi Model for enterprise person, face, vehicle, and plate intelligence."
+                data-product-image="photos/Software/software-6.png"
+                data-checkout-url="https://square.link/u/CAbN5GWV"
+                role="button"
+                tabindex="0"
+                aria-label="View Network Vigilance subscription details"
+              >
+                <figure class="gallery-figure">
+                  <img
+                    src="photos/Software/software-6.png"
+                    alt="Network Vigilance smart home security command center"
+                    loading="lazy"
+                  />
+                </figure>
+                <h3 class="gallery-title">Network Vigilance</h3>
+                <p class="gallery-desc">
+                  An AI-assisted surveillance command center that unifies cameras and smart
+                  security devices, detects people and faces, and turns activity into
+                  searchable alerts and analytics.
+                </p>
+              </article>
+
+              <!-- PURCHASABLE TOOL ITEMS -->
+              <article
+                class="gallery-item gallery-item-product"
+                data-category="tools"
+                data-product
+                data-product-title="Multi Model"
+                data-product-kicker="Network Vigilance Enterprise Extension"
+                data-product-price="$3,000"
+                data-product-description="Upgrade Network Vigilance with a unified enterprise index for vehicle and person intelligence, including plate detection, timestamped sightings, people and face tracking, and searchable analytics across connected camera feeds."
+                data-product-billing="$3,000 due today, then $3,000 every month until canceled."
+                data-product-requirement="Requires Network Vigilance (Software-6). Built for enterprise deployments that need unified person, face, vehicle, and plate intelligence across connected cameras. Enterprise access keys are issued separately after subscription confirmation."
+                data-product-image="photos/Tools/tool-1.png"
+                data-checkout-url="https://square.link/u/hHHVX2gQ"
+                role="button"
+                tabindex="0"
+                aria-label="View Multi Model purchase details"
+              >
+                <figure class="gallery-figure">
+                  <img
+                    src="photos/Tools/tool-1.png"
+                    alt="Multi Model enterprise intelligence extension for Network Vigilance"
+                    loading="lazy"
+                  />
+                  <span class="tool-card-badge">Enterprise</span>
+                </figure>
+                <h3 class="gallery-title">Multi Model | Network Vigilance</h3>
+                <p class="gallery-desc">
+                  An enterprise intelligence extension that detects plates, people, and
+                  faces, then indexes vehicle and person activity into searchable analytics
+                  inside Network Vigilance.
                 </p>
               </article>
 
@@ -1143,6 +1209,54 @@
           <button id="showcase-modal-cta" class="btn btn-primary showcase-modal-cta" type="button">
             Browse the Showcase
           </button>
+        </div>
+      </div>
+
+      <!-- Purchasable Tool Details -->
+      <div id="product-modal" class="product-modal" aria-hidden="true">
+        <div
+          class="product-modal-panel"
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="product-modal-title"
+          aria-describedby="product-modal-description"
+        >
+          <button
+            id="product-modal-close"
+            class="product-modal-close"
+            type="button"
+            aria-label="Close tool details"
+          >
+            &times;
+          </button>
+
+          <div class="product-modal-media">
+            <img id="product-modal-image" src="" alt="" />
+          </div>
+
+          <div class="product-modal-content">
+            <p id="product-modal-kicker" class="product-modal-kicker"></p>
+            <h2 id="product-modal-title" class="product-modal-title"></h2>
+            <p id="product-modal-description" class="product-modal-description"></p>
+
+            <div class="product-modal-price">
+              <span class="product-modal-price-label">Subscription access</span>
+              <strong><span id="product-modal-price">$3,000</span> <small>/ month</small></strong>
+              <span id="product-modal-billing"></span>
+            </div>
+
+            <p id="product-modal-requirement" class="product-modal-requirement"></p>
+
+            <a
+              id="product-modal-checkout"
+              class="btn btn-primary product-modal-checkout is-disabled"
+              aria-disabled="true"
+              tabindex="-1"
+            >
+              Square link coming soon
+            </a>
+            <p class="product-modal-secure">Secure recurring checkout powered by Square.</p>
+          </div>
         </div>
       </div>
 

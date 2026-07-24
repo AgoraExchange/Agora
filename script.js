@@ -340,7 +340,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   /* ---------------------------------------------------------
-     Gallery Filters (Software / Websites / Tinker)
+     Gallery Filters (Software / Websites / Tinker / Tools)
      --------------------------------------------------------- */
   const filterButtons = document.querySelectorAll(".filter-btn[data-filter]");
   const galleryItems = document.querySelectorAll(".gallery-item");
@@ -366,6 +366,104 @@ document.addEventListener("DOMContentLoaded", () => {
       });
     });
   }
+
+  /* ---------------------------------------------------------
+     Purchasable Tool Details
+     --------------------------------------------------------- */
+  const productModal = document.getElementById("product-modal");
+  const productModalClose = document.getElementById("product-modal-close");
+  const productModalImage = document.getElementById("product-modal-image");
+  const productModalKicker = document.getElementById("product-modal-kicker");
+  const productModalTitle = document.getElementById("product-modal-title");
+  const productModalDescription = document.getElementById("product-modal-description");
+  const productModalPrice = document.getElementById("product-modal-price");
+  const productModalBilling = document.getElementById("product-modal-billing");
+  const productModalRequirement = document.getElementById("product-modal-requirement");
+  const productModalCheckout = document.getElementById("product-modal-checkout");
+  const productCards = document.querySelectorAll(".gallery-item[data-product]");
+  let activeProductCard = null;
+
+  function openProductModal(card) {
+    if (!productModal || !card) return;
+
+    activeProductCard = card;
+    const productTitle = card.dataset.productTitle || "Agora Tool";
+    const checkoutUrl = (card.dataset.checkoutUrl || "").trim();
+
+    if (productModalImage) {
+      productModalImage.src = card.dataset.productImage || "";
+      productModalImage.alt = `${productTitle} preview`;
+    }
+    if (productModalKicker) productModalKicker.textContent = card.dataset.productKicker || "Agora tool";
+    if (productModalTitle) productModalTitle.textContent = productTitle;
+    if (productModalDescription) {
+      productModalDescription.textContent = card.dataset.productDescription || "";
+    }
+    if (productModalPrice) productModalPrice.textContent = card.dataset.productPrice || "";
+    if (productModalBilling) productModalBilling.textContent = card.dataset.productBilling || "";
+    if (productModalRequirement) {
+      productModalRequirement.textContent = card.dataset.productRequirement || "";
+    }
+
+    if (productModalCheckout) {
+      if (checkoutUrl) {
+        productModalCheckout.href = checkoutUrl;
+        productModalCheckout.textContent = "Subscribe with Square";
+        productModalCheckout.classList.remove("is-disabled");
+        productModalCheckout.removeAttribute("aria-disabled");
+        productModalCheckout.removeAttribute("tabindex");
+      } else {
+        productModalCheckout.removeAttribute("href");
+        productModalCheckout.textContent = "Square link coming soon";
+        productModalCheckout.classList.add("is-disabled");
+        productModalCheckout.setAttribute("aria-disabled", "true");
+        productModalCheckout.setAttribute("tabindex", "-1");
+      }
+    }
+
+    productModal.classList.add("is-open");
+    productModal.setAttribute("aria-hidden", "false");
+    document.body.classList.add("product-modal-open");
+    productModalClose?.focus({ preventScroll: true });
+  }
+
+  function closeProductModal() {
+    if (!productModal) return;
+
+    productModal.classList.remove("is-open");
+    productModal.setAttribute("aria-hidden", "true");
+    document.body.classList.remove("product-modal-open");
+    activeProductCard?.focus({ preventScroll: true });
+    activeProductCard = null;
+  }
+
+  productCards.forEach((card) => {
+    card.addEventListener("click", () => openProductModal(card));
+    card.addEventListener("keydown", (event) => {
+      if (event.key === "Enter" || event.key === " ") {
+        event.preventDefault();
+        openProductModal(card);
+      }
+    });
+  });
+
+  productModalClose?.addEventListener("click", closeProductModal);
+
+  productModal?.addEventListener("click", (event) => {
+    if (event.target === productModal) closeProductModal();
+  });
+
+  productModalCheckout?.addEventListener("click", (event) => {
+    if (productModalCheckout.getAttribute("aria-disabled") === "true") {
+      event.preventDefault();
+    }
+  });
+
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape" && productModal?.classList.contains("is-open")) {
+      closeProductModal();
+    }
+  });
 
   /* ---------------------------------------------------------
      Hades / Agora Signal Toast
