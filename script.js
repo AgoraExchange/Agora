@@ -376,6 +376,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const productModalKicker = document.getElementById("product-modal-kicker");
   const productModalTitle = document.getElementById("product-modal-title");
   const productModalDescription = document.getElementById("product-modal-description");
+  const productModalPrice = document.getElementById("product-modal-price");
   const productModalBilling = document.getElementById("product-modal-billing");
   const productModalRequirement = document.getElementById("product-modal-requirement");
   const productModalCheckout = document.getElementById("product-modal-checkout");
@@ -398,6 +399,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (productModalDescription) {
       productModalDescription.textContent = card.dataset.productDescription || "";
     }
+    if (productModalPrice) productModalPrice.textContent = card.dataset.productPrice || "";
     if (productModalBilling) productModalBilling.textContent = card.dataset.productBilling || "";
     if (productModalRequirement) {
       productModalRequirement.textContent = card.dataset.productRequirement || "";
