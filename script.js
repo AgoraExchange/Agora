@@ -594,11 +594,11 @@ document.addEventListener("DOMContentLoaded", () => {
     legalAcceptLabel.classList.add("is-locked");
     legalAcceptText.textContent =
       documentName === "privacy" ? "I accept the Privacy Policy" : "I accept the Terms of Service";
-    legalModalClose.hidden = !accepted;
+    legalModalClose.hidden = false;
     setLegalStatus(
       accepted
         ? "We appreciate your time at Agora Exchange. You may now continue."
-        : "You must read this document and accept it before continuing.",
+        : "Scroll to the end to enable acceptance, or close without accepting.",
       accepted,
     );
 
@@ -616,10 +616,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
   function closeLegalDocument() {
     if (!legalModal || !currentLegalDocument) return;
-    if (!legalAcceptance[currentLegalDocument]) {
-      setLegalStatus("Please read to the bottom and accept before continuing.");
-      return;
-    }
 
     legalModal.classList.remove("is-open");
     legalModal.setAttribute("aria-hidden", "true");
