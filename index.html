@@ -1260,6 +1260,425 @@
         </div>
       </div>
 
+      <!-- Legal Document Reader -->
+      <div id="legal-modal" class="legal-modal" aria-hidden="true">
+        <section
+          class="legal-modal-panel"
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="legal-modal-title"
+          aria-describedby="legal-modal-status"
+        >
+          <header class="legal-modal-header">
+            <div>
+              <p class="legal-modal-kicker">Agora Exchange legal</p>
+              <h2 id="legal-modal-title">PRIVACY</h2>
+            </div>
+            <button id="legal-modal-close" class="legal-modal-close" type="button" aria-label="Close legal document" hidden>
+              &times;
+            </button>
+          </header>
+          <div id="legal-modal-scroll" class="legal-modal-scroll" tabindex="0" aria-label="Scrollable legal document"></div>
+          <footer class="legal-modal-footer">
+            <p id="legal-modal-status" class="legal-modal-status" role="status" aria-live="polite">
+              You must read this document and accept it before continuing.
+            </p>
+            <label id="legal-modal-accept-label" class="legal-modal-accept is-locked">
+              <input id="legal-modal-accept" type="checkbox" disabled />
+              <span id="legal-modal-accept-text">I accept this document</span>
+            </label>
+          </footer>
+        </section>
+      </div>
+
+      <!-- Checkout Agreement Gate -->
+      <div id="purchase-consent-modal" class="purchase-consent-modal" aria-hidden="true">
+        <section
+          class="purchase-consent-panel"
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="purchase-consent-title"
+          aria-describedby="purchase-consent-copy"
+        >
+          <button id="purchase-consent-close" class="purchase-consent-close" type="button" aria-label="Close purchase requirements">
+            &times;
+          </button>
+          <p class="legal-modal-kicker">Before checkout</p>
+          <h2 id="purchase-consent-title">Buyer agreements required</h2>
+          <p id="purchase-consent-copy">
+            Buyers must agree to the Terms and Privacy Policy before purchasing or
+            subscribing to any Agora Exchange product.
+          </p>
+          <div class="purchase-consent-actions">
+            <button class="purchase-consent-document" type="button" data-legal-document="terms">
+              <span>Terms</span>
+              <small>Review and accept</small>
+            </button>
+            <button class="purchase-consent-document" type="button" data-legal-document="privacy">
+              <span>Privacy</span>
+              <small>Review and accept</small>
+            </button>
+          </div>
+          <p id="purchase-consent-status" class="purchase-consent-status" role="status" aria-live="polite">
+            Complete both documents to unlock checkout.
+          </p>
+          <button id="purchase-consent-continue" class="btn btn-primary" type="button" hidden>Purchase</button>
+        </section>
+      </div>
+
+      <template id="privacy-legal-content">
+        <article class="legal-copy">
+          <p class="legal-effective">Effective July 24, 2026 · Last updated July 24, 2026</p>
+          <p>
+            This Privacy Policy explains how Agora Exchange (“Agora,” “we,” “us,” or “our”)
+            handles information when you visit this website, contact us, apply for work,
+            request services, purchase or subscribe to software, use an API or access key,
+            or otherwise interact with an Agora product or service. A specific enterprise
+            agreement or product notice may provide additional terms for that service.
+          </p>
+
+          <h3>1. Information you provide</h3>
+          <p>
+            We may receive your name, business name, email address, telephone number, billing
+            or delivery details, project requirements, support messages, job-application
+            information, and files or content you choose to send. Do not send passwords, full
+            card numbers, government identifiers, biometric templates, or other sensitive
+            information unless requested through an approved secure channel.
+          </p>
+
+          <h3>2. Purchases, subscriptions, and Square</h3>
+          <p>
+            Purchases are completed through Square. Agora may receive details needed to fulfill
+            and support an order, including buyer contact information, product, amount, payment
+            and subscription status, timestamps, refunds, disputes, and Square identifiers.
+            Agora does not receive or store complete card numbers through this website. Square
+            independently processes payment information under its own buyer notices and terms.
+          </p>
+
+          <h3>3. Website and device information</h3>
+          <p>
+            Hosting, security, and service providers may automatically receive IP address,
+            browser and device type, operating system, referring page, requested pages,
+            timestamps, approximate location inferred from IP, and diagnostic or security
+            events. This information may be used to operate the site, prevent abuse,
+            investigate incidents, measure reliability, and improve the experience.
+          </p>
+
+          <h3>4. Local storage and consent records</h3>
+          <p>
+            This site uses browser local storage to remember whether this version of the
+            Privacy Policy and Terms has been accepted. The record contains document names,
+            version information, and acceptance state in your browser. It is not a server-side
+            signature and can be removed by clearing site data, using another browser, or
+            browsing privately. Separate transaction records may be used when stronger proof
+            of consent is required.
+          </p>
+
+          <h3>5. Surveillance and product data</h3>
+          <p>
+            Certain products may process camera streams, person events, faces, vehicles,
+            license plates, device signals, logs, or security analytics. Unless a written
+            agreement says otherwise, the customer controls this data and decides what is
+            collected, where the product is deployed, who has access, and how long data is
+            retained. Agora does not automatically receive customer footage or biometric data
+            merely because software is licensed. We may receive limited samples, diagnostics,
+            or remote access when deliberately provided for support or a contracted hosted service.
+          </p>
+
+          <h3>6. How information is used</h3>
+          <p>
+            We use information to respond to inquiries; prepare proposals; deliver,
+            authenticate, and support products; administer subscriptions and access keys;
+            communicate about transactions; improve safety and reliability; detect fraud or
+            misuse; protect customers and the public; comply with law; enforce agreements; and
+            establish, exercise, or defend legal claims. Where required, processing relies on
+            consent, contract performance, legal obligations, or legitimate business interests.
+          </p>
+
+          <h3>7. How information may be disclosed</h3>
+          <p>
+            Information may be disclosed to hosting, communications, security, fulfillment,
+            professional-adviser, and payment providers that need it to perform services; to
+            Square for payments; to an enterprise administrator controlling your account; to
+            authorities when reasonably necessary to comply with law, protect rights or safety,
+            investigate fraud, or enforce agreements; and during a merger, financing,
+            reorganization, sale, or transfer of the business.
+          </p>
+
+          <h3>8. Sale, sharing, and advertising</h3>
+          <p>
+            Agora does not currently sell personal information for money or use this site for
+            cross-context behavioral advertising. If practices change, this policy will be
+            updated and legally required choices will be provided. External services may use
+            information under their own policies, which Agora does not control.
+          </p>
+
+          <h3>9. Retention</h3>
+          <p>
+            Information is retained as reasonably necessary to provide products, maintain
+            subscriptions, fulfill support obligations, preserve security logs, comply with
+            accounting and tax rules, resolve disputes, and enforce agreements. Periods vary
+            by record type, legal requirements, sensitivity, and business need. Deidentified
+            information and records needed for fraud prevention or legal claims may remain
+            after an account or subscription ends.
+          </p>
+
+          <h3>10. Security</h3>
+          <p>
+            We use measures designed to protect information in light of its sensitivity and
+            the services involved. No website, transmission, storage system, API, model, or
+            security control is guaranteed completely secure. You must protect credentials,
+            restrict access to keys and downloads, maintain secure devices, install updates,
+            and report suspected compromise promptly.
+          </p>
+
+          <h3>11. Your privacy choices and rights</h3>
+          <p>
+            Depending on location, you may have rights to request access, correction, deletion,
+            portability, restriction, objection, disclosure information, withdrawal of consent,
+            or appeal. Rights may be limited by identity verification, legal exceptions,
+            another person’s rights, security, or required retention. Submit requests through
+            the Agora contact or project brief form. We may verify identity and authority.
+          </p>
+
+          <h3>12. Communications</h3>
+          <p>
+            Transactional, security, access, subscription, and support messages may continue
+            even if you opt out of marketing. Marketing messages, if offered, will include
+            available preference controls. You are responsible for keeping contact information
+            accurate so renewal, security, and fulfillment notices can reach you.
+          </p>
+
+          <h3>13. Children</h3>
+          <p>
+            The site and commercial products are intended for adults and authorized business
+            users, not children under 13. Purchases require a person at least 18 who can form a
+            contract. Do not intentionally submit children’s information. Contact us if you
+            believe a child provided information improperly.
+          </p>
+
+          <h3>14. International and regulated use</h3>
+          <p>
+            Information may be processed in the United States and where providers operate.
+            Customers deploying surveillance, facial-analysis, or vehicle-analysis products
+            must provide notices, obtain consent, complete assessments, restrict access, and
+            honor rights whenever required by biometric, employment, wiretap, surveillance,
+            data-protection, or other applicable laws.
+          </p>
+
+          <h3>15. Third-party services</h3>
+          <p>
+            Links to Square, GitHub, social platforms, customer sites, and other parties are
+            governed by their own terms and notices. Review the
+            <a href="https://squareup.com/us/en/legal/general/buyer-features" target="_blank" rel="noopener noreferrer">Square Buyer Privacy Notice</a>
+            before using Square buyer features. Agora is not responsible for a third party’s
+            independent privacy or security practices.
+          </p>
+
+          <h3>16. Changes and contact</h3>
+          <p>
+            We may revise this policy for product, legal, operational, or security changes.
+            The effective date identifies the version presented for acceptance, and material
+            changes may require renewed acceptance. Submit questions, complaints, and rights
+            requests through the contact or project brief area. Acceptance confirms review of
+            this policy; it does not waive rights that cannot lawfully be waived.
+          </p>
+        </article>
+      </template>
+
+      <template id="terms-legal-content">
+        <article class="legal-copy">
+          <p class="legal-effective">Effective July 24, 2026 · Last updated July 24, 2026</p>
+          <p>
+            These Terms of Service (“Terms”) form an agreement between Agora Exchange
+            (“Agora,” “we,” “us,” or “our”) and the person or organization using this site or
+            purchasing, subscribing to, downloading, receiving, or using an Agora offering
+            (“you”). If acting for an organization, you represent that you can bind it. Do not
+            purchase or use an offering if you reject these Terms or the Privacy Policy.
+          </p>
+
+          <h3>1. Eligibility and accurate information</h3>
+          <p>
+            You must be at least 18, able to form a contract, and permitted to use the offering
+            in your location. Provide accurate information and keep billing, security, and
+            delivery contacts current. You may not impersonate another person, conceal a
+            prohibited use, misrepresent authority, or buy for an organization without permission.
+          </p>
+
+          <h3>2. Orders and scope</h3>
+          <p>
+            Product pages, proposals, statements of work, invoices, and confirmations describe
+            the offering, price, billing interval, deliverables, dependencies, limits, and
+            support. An order is accepted when payment is approved and fulfillment is confirmed
+            or begins. We may reject or cancel before fulfillment for pricing error, suspected
+            fraud, legal restriction, capacity, security risk, or prohibited use.
+          </p>
+
+          <h3>3. Subscriptions and automatic renewal</h3>
+          <p>
+            A monthly subscription charges the displayed amount when purchased and renews at
+            the stated interval until canceled. By selecting Purchase and completing Square
+            checkout, you expressly authorize recurring charges to the payment method supplied
+            to Square. Renewal continues without separate monthly approval. Review the price,
+            cadence, and cancellation information shown before payment.
+          </p>
+
+          <h3>4. Cancellation, failed payment, and access</h3>
+          <p>
+            Request cancellation through Agora’s contact or project brief channel or any Square
+            control available for the transaction. Cancel before renewal to avoid the next
+            charge. Unless law or a written order says otherwise, cancellation stops future
+            renewal at the end of the current paid period. Failed, reversed, disputed, expired,
+            or unpaid charges may suspend downloads, hosted features, API keys, updates,
+            support, and software functionality until payment is restored.
+          </p>
+
+          <h3>5. Refund policy</h3>
+          <p>
+            Except where required by law or expressly promised in a signed agreement, payments
+            are final and non-refundable once digital access, a download, license, access key,
+            configuration, custom work, or a subscription period has been supplied or begun.
+            No prorated refund is provided for unused time, delayed deployment, customer
+            hardware problems, change of mind, failure to cancel, or suspension for breach.
+            Report duplicate, unauthorized, or incorrect charges promptly. Non-waivable rights remain.
+          </p>
+
+          <h3>6. License—no ownership transfer</h3>
+          <p>
+            Payment grants only the limited, revocable, non-exclusive, non-transferable license
+            or access rights stated in the order. Agora retains software, source code, models,
+            interfaces, designs, documentation, trademarks, updates, derivatives, and related
+            intellectual property. A subscription does not transfer ownership. The license
+            remains active only while paid and compliant unless a written perpetual-license
+            order explicitly says otherwise.
+          </p>
+
+          <h3>7. Authorized use only</h3>
+          <p>
+            Security, intelligence, camera, face, person, vehicle, plate, network, API, and
+            cybersecurity capabilities are solely for lawful, authorized purposes. You must
+            own or control the systems and locations or have clear permission. You are
+            responsible for notices, consent, warrants, policies, retention, access controls,
+            human review, and compliance with privacy, biometric, employment, civil-rights,
+            wiretap, computer-access, surveillance, export, and other laws.
+          </p>
+
+          <h3>8. Prohibited conduct</h3>
+          <p>
+            You may not stalk, harass, discriminate, intimidate, unlawfully identify or monitor
+            people, invade private spaces, intercept communications, access systems without
+            permission, deploy malware, steal credentials, facilitate violence, evade lawful
+            controls, violate sanctions, commit fraud, or perform any illegal act. You may not
+            resell, sublicense, publish, share, leak, reverse engineer, decompile, defeat
+            licensing controls, overload, or create a competing derivative except where a
+            restriction is prohibited by law.
+          </p>
+
+          <h3>9. Customer systems, data, and decisions</h3>
+          <p>
+            You control equipment, networks, cameras, configurations, users, data, retention,
+            alerts, and decisions. Test accuracy and suitability, maintain human oversight,
+            secure credentials and exports, back up critical data, and prevent unauthorized
+            access. Analytics, matches, alerts, and model outputs can be incomplete, delayed,
+            unavailable, or wrong and must not be the sole basis for arrest, employment,
+            housing, credit, insurance, medical, emergency, or other high-impact decisions.
+          </p>
+
+          <h3>10. Dependencies and changes</h3>
+          <p>
+            Offerings may depend on hardware, cameras, operating systems, networks, third-party
+            APIs, Square, hosting, and customer configuration. Agora does not control every
+            dependency and is not responsible for third-party outages, restrictions, or data
+            practices. We may patch, replace, limit, or discontinue features for security,
+            legal, technical, or business reasons, with reasonable notice when appropriate.
+          </p>
+
+          <h3>11. Keys and account security</h3>
+          <p>
+            API keys, license files, credentials, downloads, and tokens are confidential and
+            usable only by the licensed customer within purchased limits. Do not post, resell,
+            duplicate, or share them beyond authorized personnel. You are responsible for key
+            activity and prompt compromise reports. Agora may rotate, revoke, rate-limit, or
+            suspend credentials for protection, enforcement, nonpayment, or suspected misuse.
+          </p>
+
+          <h3>12. Support and cooperation</h3>
+          <p>
+            Support, maintenance, response times, installation, training, customization, and
+            service levels are included only when the order says so. Provide timely information,
+            safe access, compatible systems, authorized test data, and a qualified contact.
+            Customer-caused delays, unsafe conditions, unsupported changes, third-party systems,
+            or inaccurate information do not create a refund right unless agreed in writing.
+          </p>
+
+          <h3>13. Confidentiality and feedback</h3>
+          <p>
+            Nonpublic software, credentials, pricing, documentation, security information,
+            customer data, and business plans must be reasonably protected and used only for
+            the relationship. This excludes information lawfully public, already known,
+            independently developed, or properly received elsewhere. Agora may use suggestions
+            and feedback without restriction or compensation without publicly identifying you.
+          </p>
+
+          <h3>14. Warranty disclaimer</h3>
+          <p>
+            To the maximum extent permitted by law, the website and offerings are provided “as
+            is” and “as available.” Agora disclaims implied warranties of merchantability,
+            fitness for a particular purpose, title, non-infringement, uninterrupted operation,
+            error-free results, and analytics accuracy. No statement creates a guarantee unless
+            it is an express warranty in a signed agreement. Some exclusions may not apply where prohibited.
+          </p>
+
+          <h3>15. Limitation of liability</h3>
+          <p>
+            To the maximum extent permitted by law, Agora and its personnel are not liable for
+            indirect, incidental, special, exemplary, punitive, or consequential damages; lost
+            profits, goodwill, business, opportunity, or data; replacement services; customer
+            surveillance decisions; unauthorized use; or third-party systems. Aggregate
+            liability will not exceed the amount paid for the offering during the three months
+            before the event. Liability that cannot lawfully be limited is not excluded.
+          </p>
+
+          <h3>16. Indemnification</h3>
+          <p>
+            To the extent permitted by law, you will defend, indemnify, and hold harmless Agora
+            and its personnel from third-party claims, losses, penalties, and reasonable costs
+            arising from your data, deployment, unauthorized or unlawful use, violation of
+            rights, breach of these Terms, or missing notices and consent. You may not settle
+            by admitting Agora’s fault or imposing obligations on Agora without written consent.
+          </p>
+
+          <h3>17. Suspension and termination</h3>
+          <p>
+            Agora may suspend or terminate for nonpayment, charge reversal, security threats,
+            suspected illegal or harmful use, credential sharing, material breach, legal demand,
+            or risk to a person or system. When terminated, the license ends and protected
+            software and credentials must no longer be used. Payment, ownership, confidentiality,
+            disclaimers, liability, indemnity, and dispute terms survive as appropriate.
+          </p>
+
+          <h3>18. Disputes and general terms</h3>
+          <p>
+            Before filing a claim, send a written description through Agora’s contact channel
+            and allow 30 days for good-faith resolution unless urgent relief or law requires
+            otherwise. A signed order controls governing law, venue, arbitration, or dispute
+            procedures; otherwise applicable law decides. Failure to enforce is not waiver.
+            Unenforceable language will be limited while the remainder continues. Neither party
+            is responsible for delay beyond reasonable control, except payment obligations.
+          </p>
+
+          <h3>19. Changes, acceptance, and contact</h3>
+          <p>
+            We may update these Terms for legal, security, product, or operational reasons.
+            Material changes may require renewed acceptance. Checking acceptance and continuing
+            to checkout constitutes electronic acceptance and confirms an opportunity to review.
+            Review Square’s
+            <a href="https://squareup.com/us/en/legal/general/payment" target="_blank" rel="noopener noreferrer">Payment Terms</a>.
+            Questions and cancellation requests should use the Agora contact or project brief area.
+          </p>
+        </article>
+      </template>
+
       <!-- ==============================
            GLOBAL FOOTER
            ============================== -->
@@ -1284,7 +1703,7 @@
             <button class="footer-link" type="button" data-view="gallery">Showcase</button>
 
             <!-- ✅ NEW: Careers link in footer -->
-            <a class="footer-bottom-link" href="career.html" aria-label="Careers and job application">
+            <a class="footer-link" href="career.html" aria-label="Careers and job application">
               Careers
             </a>
           </div>
@@ -1320,8 +1739,8 @@
             © <span id="footer-year"></span> Agora Exchange. All rights reserved. | Powered By Tornet
           </p>
           <div class="footer-bottom-links">
-            <a href="#" class="footer-bottom-link">Privacy</a>
-            <a href="#" class="footer-bottom-link">Terms</a>
+            <button class="footer-bottom-link" type="button" data-legal-document="privacy">Privacy</button>
+            <button class="footer-bottom-link" type="button" data-legal-document="terms">Terms</button>
 
             <!-- ✅ NEW: Careers also in the bottom row for visibility -->
             <a href="career.html" class="footer-bottom-link">Careers</a>

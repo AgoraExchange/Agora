@@ -456,14 +456,252 @@ document.addEventListener("DOMContentLoaded", () => {
   productModalCheckout?.addEventListener("click", (event) => {
     if (productModalCheckout.getAttribute("aria-disabled") === "true") {
       event.preventDefault();
+      return;
+    }
+
+    if (!allLegalDocumentsAccepted()) {
+      event.preventDefault();
+      openPurchaseConsent(productModalCheckout.href);
     }
   });
 
   document.addEventListener("keydown", (event) => {
-    if (event.key === "Escape" && productModal?.classList.contains("is-open")) {
+    if (
+      event.key === "Escape" &&
+      productModal?.classList.contains("is-open") &&
+      !legalModal?.classList.contains("is-open") &&
+      !purchaseConsentModal?.classList.contains("is-open")
+    ) {
       closeProductModal();
     }
   });
+
+  /* ---------------------------------------------------------
+     Legal documents and checkout consent
+     --------------------------------------------------------- */
+  const LEGAL_VERSION = "2026-07-24";
+  const LEGAL_STORAGE_KEY = `agora-legal-acceptance:${LEGAL_VERSION}`;
+  const legalModal = document.getElementById("legal-modal");
+  const legalModalTitle = document.getElementById("legal-modal-title");
+  const legalModalClose = document.getElementById("legal-modal-close");
+  const legalModalScroll = document.getElementById("legal-modal-scroll");
+  const legalModalStatus = document.getElementById("legal-modal-status");
+  const legalAccept = document.getElementById("legal-modal-accept");
+  const legalAcceptLabel = document.getElementById("legal-modal-accept-label");
+  const legalAcceptText = document.getElementById("legal-modal-accept-text");
+  const purchaseConsentModal = document.getElementById("purchase-consent-modal");
+  const purchaseConsentClose = document.getElementById("purchase-consent-close");
+  const purchaseConsentStatus = document.getElementById("purchase-consent-status");
+  const purchaseConsentContinue = document.getElementById("purchase-consent-continue");
+  const purchaseConsentDocuments = document.querySelectorAll(
+    ".purchase-consent-document[data-legal-document]",
+  );
+  const legalDocumentTriggers = document.querySelectorAll("[data-legal-document]");
+  let currentLegalDocument = null;
+  let legalReturnFocus = null;
+  let pendingCheckoutUrl = "";
+
+  function loadLegalAcceptance() {
+    try {
+      const saved = JSON.parse(localStorage.getItem(LEGAL_STORAGE_KEY) || "{}");
+      return {
+        privacy: Boolean(saved.privacy),
+        terms: Boolean(saved.terms),
+      };
+    } catch {
+      return { privacy: false, terms: false };
+    }
+  }
+
+  const legalAcceptance = loadLegalAcceptance();
+
+  function saveLegalAcceptance() {
+    try {
+      localStorage.setItem(
+        LEGAL_STORAGE_KEY,
+        JSON.stringify({
+          privacy: legalAcceptance.privacy,
+          terms: legalAcceptance.terms,
+          acceptedAt: new Date().toISOString(),
+        }),
+      );
+    } catch {
+      // Consent still applies for this page session when storage is unavailable.
+    }
+  }
+
+  function allLegalDocumentsAccepted() {
+    return legalAcceptance.privacy && legalAcceptance.terms;
+  }
+
+  function setLegalStatus(message, complete = false) {
+    if (!legalModalStatus) return;
+    legalModalStatus.textContent = message;
+    legalModalStatus.classList.toggle("is-complete", complete);
+  }
+
+  function updatePurchaseConsent() {
+    purchaseConsentDocuments.forEach((button) => {
+      const documentName = button.dataset.legalDocument;
+      const accepted = Boolean(legalAcceptance[documentName]);
+      button.disabled = accepted;
+      button.classList.toggle("is-accepted", accepted);
+      const detail = button.querySelector("small");
+      if (detail) detail.textContent = accepted ? "Accepted" : "Review and accept";
+    });
+
+    const complete = allLegalDocumentsAccepted();
+    if (purchaseConsentStatus) {
+      purchaseConsentStatus.textContent = complete
+        ? "We appreciate your time at Agora Exchange. You may now continue."
+        : "Complete both documents to unlock checkout.";
+      purchaseConsentStatus.classList.toggle("is-complete", complete);
+    }
+    if (purchaseConsentContinue) purchaseConsentContinue.hidden = !complete;
+  }
+
+  function legalScrollReachedBottom() {
+    if (!legalModalScroll) return false;
+    return (
+      legalModalScroll.scrollTop + legalModalScroll.clientHeight >=
+      legalModalScroll.scrollHeight - 6
+    );
+  }
+
+  function unlockLegalAcceptance() {
+    if (!legalAccept || !legalAcceptLabel || legalAccept.disabled === false) return;
+    if (!legalScrollReachedBottom()) return;
+    legalAccept.disabled = false;
+    legalAcceptLabel.classList.remove("is-locked");
+    setLegalStatus("You reached the end. Check the box to record your acceptance.");
+  }
+
+  function openLegalDocument(documentName, trigger) {
+    if (!["privacy", "terms"].includes(documentName) || !legalModal || !legalModalScroll) return;
+
+    const template = document.getElementById(`${documentName}-legal-content`);
+    if (!template) return;
+
+    currentLegalDocument = documentName;
+    legalReturnFocus = trigger || document.activeElement;
+    legalModalTitle.textContent = documentName === "privacy" ? "PRIVACY" : "TERMS";
+    legalModalScroll.replaceChildren(template.content.cloneNode(true));
+    legalModalScroll.scrollTop = 0;
+
+    const accepted = Boolean(legalAcceptance[documentName]);
+    legalAccept.checked = accepted;
+    legalAccept.disabled = true;
+    legalAcceptLabel.classList.add("is-locked");
+    legalAcceptText.textContent =
+      documentName === "privacy" ? "I accept the Privacy Policy" : "I accept the Terms of Service";
+    legalModalClose.hidden = !accepted;
+    setLegalStatus(
+      accepted
+        ? "We appreciate your time at Agora Exchange. You may now continue."
+        : "You must read this document and accept it before continuing.",
+      accepted,
+    );
+
+    if (purchaseConsentModal?.classList.contains("is-open")) {
+      purchaseConsentModal.setAttribute("aria-hidden", "true");
+    }
+    legalModal.classList.add("is-open");
+    legalModal.setAttribute("aria-hidden", "false");
+    document.body.classList.add("legal-modal-open");
+    requestAnimationFrame(() => {
+      legalModalScroll.focus({ preventScroll: true });
+      if (!accepted) unlockLegalAcceptance();
+    });
+  }
+
+  function closeLegalDocument() {
+    if (!legalModal || !currentLegalDocument) return;
+    if (!legalAcceptance[currentLegalDocument]) {
+      setLegalStatus("Please read to the bottom and accept before continuing.");
+      return;
+    }
+
+    legalModal.classList.remove("is-open");
+    legalModal.setAttribute("aria-hidden", "true");
+    document.body.classList.remove("legal-modal-open");
+    currentLegalDocument = null;
+    if (purchaseConsentModal?.classList.contains("is-open")) {
+      purchaseConsentModal.setAttribute("aria-hidden", "false");
+      updatePurchaseConsent();
+    }
+    legalReturnFocus?.focus?.({ preventScroll: true });
+    legalReturnFocus = null;
+  }
+
+  function openPurchaseConsent(checkoutUrl) {
+    if (!purchaseConsentModal) return;
+    pendingCheckoutUrl = checkoutUrl || pendingCheckoutUrl;
+    updatePurchaseConsent();
+    purchaseConsentModal.classList.add("is-open");
+    purchaseConsentModal.setAttribute("aria-hidden", "false");
+    document.body.classList.add("purchase-consent-open");
+    const firstRequired = [...purchaseConsentDocuments].find((button) => !button.disabled);
+    (firstRequired || purchaseConsentContinue || purchaseConsentClose)?.focus({
+      preventScroll: true,
+    });
+  }
+
+  function closePurchaseConsent() {
+    if (!purchaseConsentModal) return;
+    purchaseConsentModal.classList.remove("is-open");
+    purchaseConsentModal.setAttribute("aria-hidden", "true");
+    document.body.classList.remove("purchase-consent-open");
+    productModalCheckout?.focus({ preventScroll: true });
+  }
+
+  legalModalScroll?.addEventListener("scroll", unlockLegalAcceptance);
+
+  legalAccept?.addEventListener("change", () => {
+    if (!currentLegalDocument || !legalAccept.checked || legalAccept.disabled) return;
+    legalAcceptance[currentLegalDocument] = true;
+    saveLegalAcceptance();
+    legalAccept.disabled = true;
+    legalAcceptLabel.classList.add("is-locked");
+    legalModalClose.hidden = false;
+    setLegalStatus("We appreciate your time at Agora Exchange. You may now continue.", true);
+    updatePurchaseConsent();
+    legalModalClose.focus({ preventScroll: true });
+  });
+
+  legalDocumentTriggers.forEach((trigger) => {
+    trigger.addEventListener("click", () => {
+      const documentName = trigger.dataset.legalDocument;
+      if (trigger.disabled && legalAcceptance[documentName]) return;
+      openLegalDocument(documentName, trigger);
+    });
+  });
+
+  legalModalClose?.addEventListener("click", closeLegalDocument);
+  legalModal?.addEventListener("click", (event) => {
+    if (event.target === legalModal) closeLegalDocument();
+  });
+
+  purchaseConsentClose?.addEventListener("click", closePurchaseConsent);
+  purchaseConsentModal?.addEventListener("click", (event) => {
+    if (event.target === purchaseConsentModal) closePurchaseConsent();
+  });
+
+  purchaseConsentContinue?.addEventListener("click", () => {
+    if (allLegalDocumentsAccepted() && pendingCheckoutUrl) {
+      window.location.assign(pendingCheckoutUrl);
+    }
+  });
+
+  document.addEventListener("keydown", (event) => {
+    if (event.key !== "Escape") return;
+    if (legalModal?.classList.contains("is-open")) {
+      closeLegalDocument();
+    } else if (purchaseConsentModal?.classList.contains("is-open")) {
+      closePurchaseConsent();
+    }
+  });
+
+  updatePurchaseConsent();
 
   /* ---------------------------------------------------------
      Hades / Agora Signal Toast

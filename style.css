@@ -624,6 +624,10 @@ textarea {
   border: none;
   color: var(--text-dim);
   cursor: pointer;
+  display: block;
+  width: fit-content;
+  font: inherit;
+  text-decoration: none;
   transition: var(--transition);
   margin-bottom: 6px;
   padding: 0;
@@ -667,7 +671,12 @@ textarea {
 
 /* ✅ footer-bottom-link is used by <a> links (Careers/Terms/etc) */
 .footer-bottom-link {
+  appearance: none;
+  background: transparent;
+  border: 1px solid transparent;
   color: var(--text-soft);
+  cursor: pointer;
+  font: inherit;
   margin-left: 16px;
   font-size: 13px;
   text-decoration: none;
@@ -1318,6 +1327,262 @@ body.product-modal-open {
   background: rgba(8, 20, 42, 0.98);
 }
 
+/* Legal agreements and checkout consent */
+body.legal-modal-open,
+body.purchase-consent-open {
+  overflow: hidden;
+}
+
+.legal-modal,
+.purchase-consent-modal {
+  position: fixed;
+  inset: 0;
+  display: none;
+  place-items: center;
+  padding: 1rem;
+  background:
+    radial-gradient(circle at 18% 8%, rgba(79, 70, 229, 0.25), transparent 34rem),
+    rgba(0, 0, 0, 0.9);
+  backdrop-filter: blur(12px);
+}
+
+.purchase-consent-modal {
+  z-index: 1850;
+}
+
+.legal-modal {
+  z-index: 1950;
+}
+
+.legal-modal.is-open,
+.purchase-consent-modal.is-open {
+  display: grid;
+}
+
+.legal-modal-panel,
+.purchase-consent-panel {
+  position: relative;
+  width: min(900px, 100%);
+  max-height: calc(100vh - 2rem);
+  border: 1px solid rgba(100, 255, 218, 0.35);
+  border-radius: 1.15rem;
+  background: linear-gradient(155deg, rgba(3, 11, 25, 0.995), rgba(15, 23, 42, 0.995));
+  box-shadow: 0 36px 110px rgba(0, 0, 0, 0.85);
+}
+
+.legal-modal-panel {
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr) auto;
+  height: min(860px, calc(100vh - 2rem));
+  overflow: hidden;
+}
+
+.legal-modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1.25rem 1.4rem 1rem;
+  border-bottom: 1px solid rgba(148, 163, 184, 0.18);
+}
+
+.legal-modal-header h2,
+.purchase-consent-panel h2 {
+  margin: 0;
+  color: #f8fafc;
+  font-size: clamp(1.75rem, 4vw, 2.45rem);
+  letter-spacing: 0.04em;
+}
+
+.legal-modal-kicker {
+  margin: 0 0 0.3rem;
+  color: #64ffda;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+}
+
+.legal-modal-close,
+.purchase-consent-close {
+  flex: 0 0 auto;
+  width: 2.55rem;
+  height: 2.55rem;
+  border: 1px solid rgba(100, 255, 218, 0.42);
+  border-radius: 999px;
+  background: rgba(2, 6, 23, 0.92);
+  color: #e5faff;
+  font-size: 1.45rem;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.legal-modal-close:hover,
+.legal-modal-close:focus-visible,
+.purchase-consent-close:hover,
+.purchase-consent-close:focus-visible {
+  border-color: #64ffda;
+  background: rgba(8, 20, 42, 0.98);
+}
+
+.legal-modal-scroll {
+  min-height: 0;
+  overflow-y: auto;
+  padding: 1.3rem 1.5rem 2.5rem;
+  scrollbar-color: #64ffda rgba(15, 23, 42, 0.8);
+  scrollbar-width: thin;
+}
+
+.legal-modal-scroll::-webkit-scrollbar {
+  width: 10px;
+}
+
+.legal-modal-scroll::-webkit-scrollbar-track {
+  background: rgba(15, 23, 42, 0.8);
+}
+
+.legal-modal-scroll::-webkit-scrollbar-thumb {
+  border: 2px solid rgba(15, 23, 42, 0.8);
+  border-radius: 999px;
+  background: #64ffda;
+}
+
+.legal-copy {
+  max-width: 760px;
+  margin: 0 auto;
+  color: #cbd5e1;
+  font-size: 0.92rem;
+  line-height: 1.72;
+}
+
+.legal-copy h3 {
+  margin: 1.65rem 0 0.45rem;
+  color: #f1f5f9;
+  font-size: 1.02rem;
+}
+
+.legal-copy p {
+  margin: 0 0 0.9rem;
+}
+
+.legal-copy a {
+  color: #8ffff0;
+}
+
+.legal-effective {
+  color: #a5b4fc;
+  font-size: 0.76rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+}
+
+.legal-modal-footer {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem 1.4rem 1.2rem;
+  border-top: 1px solid rgba(148, 163, 184, 0.18);
+  background: rgba(2, 6, 23, 0.75);
+}
+
+.legal-modal-status,
+.purchase-consent-status {
+  margin: 0;
+  color: #fbbf24;
+  font-size: 0.8rem;
+  line-height: 1.45;
+}
+
+.legal-modal-status.is-complete,
+.purchase-consent-status.is-complete {
+  color: #64ffda;
+}
+
+.legal-modal-accept {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.65rem;
+  color: #e2e8f0;
+  font-size: 0.82rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.legal-modal-accept.is-locked {
+  color: #64748b;
+  cursor: not-allowed;
+}
+
+.legal-modal-accept input {
+  width: 1.15rem;
+  height: 1.15rem;
+  accent-color: #64ffda;
+}
+
+.purchase-consent-panel {
+  width: min(590px, 100%);
+  padding: clamp(1.4rem, 4vw, 2.25rem);
+}
+
+.purchase-consent-close {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+}
+
+#purchase-consent-copy {
+  margin: 1rem 3rem 1.35rem 0;
+  color: #cbd5e1;
+  line-height: 1.65;
+}
+
+.purchase-consent-actions {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.85rem;
+}
+
+.purchase-consent-document {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  padding: 1rem;
+  border: 1px solid rgba(129, 140, 248, 0.4);
+  border-radius: 0.85rem;
+  background: rgba(30, 41, 59, 0.62);
+  color: #f8fafc;
+  text-align: left;
+  cursor: pointer;
+}
+
+.purchase-consent-document:hover,
+.purchase-consent-document:focus-visible {
+  border-color: #64ffda;
+}
+
+.purchase-consent-document small {
+  color: #a5b4fc;
+}
+
+.purchase-consent-document.is-accepted {
+  border-color: rgba(100, 255, 218, 0.22);
+  color: #64748b;
+  background: rgba(15, 23, 42, 0.45);
+  cursor: default;
+  opacity: 0.62;
+}
+
+.purchase-consent-status {
+  margin-top: 1rem;
+}
+
+#purchase-consent-continue {
+  width: 100%;
+  justify-content: center;
+  margin-top: 1rem;
+}
+
 @media (max-width: 760px) {
   .product-modal {
     align-items: start;
@@ -1336,6 +1601,34 @@ body.product-modal-open {
 
   .product-modal-content {
     padding: 1.4rem;
+  }
+
+  .legal-modal,
+  .purchase-consent-modal {
+    align-items: start;
+    padding: 0.55rem;
+  }
+
+  .legal-modal-panel {
+    height: calc(100vh - 1.1rem);
+    max-height: calc(100vh - 1.1rem);
+  }
+
+  .legal-modal-header,
+  .legal-modal-footer {
+    padding-inline: 1rem;
+  }
+
+  .legal-modal-footer {
+    grid-template-columns: 1fr;
+  }
+
+  .legal-modal-scroll {
+    padding-inline: 1rem;
+  }
+
+  .purchase-consent-actions {
+    grid-template-columns: 1fr;
   }
 }
 
