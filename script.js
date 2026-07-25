@@ -24,6 +24,111 @@ document.addEventListener("DOMContentLoaded", () => {
   const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
   /* ---------------------------------------------------------
+     Hero motion: typewriter, word reels, and staggered updates
+     --------------------------------------------------------- */
+  const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+  const motionDelay = (milliseconds) =>
+    new Promise((resolve) => window.setTimeout(resolve, milliseconds));
+
+  async function waitForVisiblePage() {
+    while (document.hidden && !reducedMotion.matches) {
+      await motionDelay(600);
+    }
+  }
+
+  async function runTypewriter(element) {
+    const target = element?.dataset.typewriter || "";
+    if (!element || !target || reducedMotion.matches) return;
+
+    element.classList.add("is-animated");
+    await motionDelay(420);
+
+    while (!reducedMotion.matches && document.documentElement.contains(element)) {
+      element.textContent = "";
+
+      for (let index = 1; index <= target.length; index += 1) {
+        if (reducedMotion.matches) break;
+        await waitForVisiblePage();
+        element.textContent = target.slice(0, index);
+        await motionDelay(index === target.length ? 150 : 105);
+      }
+
+      if (reducedMotion.matches) break;
+      element.classList.add("is-complete");
+      await motionDelay(3400);
+      element.classList.remove("is-complete");
+
+      for (let index = target.length - 1; index >= 0; index -= 1) {
+        if (reducedMotion.matches) break;
+        await waitForVisiblePage();
+        element.textContent = target.slice(0, index);
+        await motionDelay(48);
+      }
+
+      await motionDelay(520);
+    }
+
+    element.textContent = target;
+    element.classList.remove("is-animated", "is-complete");
+  }
+
+  async function runWordReel(element, words, initialDelay, holdTime) {
+    if (!element || !words.length || reducedMotion.matches) return;
+    let wordIndex = Math.max(0, words.indexOf(element.textContent.trim()));
+    await motionDelay(initialDelay);
+
+    while (!reducedMotion.matches && document.documentElement.contains(element)) {
+      await waitForVisiblePage();
+      element.classList.add("is-exiting");
+      await motionDelay(280);
+
+      if (reducedMotion.matches) break;
+      wordIndex = (wordIndex + 1) % words.length;
+      element.textContent = words[wordIndex];
+      element.classList.remove("is-exiting");
+      element.classList.add("is-entering");
+      await motionDelay(480);
+      element.classList.remove("is-entering");
+      await motionDelay(holdTime);
+    }
+
+    element.classList.remove("is-exiting", "is-entering");
+  }
+
+  const headlineWordSets = [
+    ["websites", "software", "platforms", "dashboards"],
+    ["tools", "consoles", "modules", "automations"],
+    ["scripts", "systems", "workflows", "integrations"],
+  ];
+  const solutionWordSets = [
+    ["Web", "Software", "Games", "Coding", "Botnet"],
+    ["Tools", "Tinkers", "Gadgets", "Modules", "Hacks"],
+    ["Scripts", "Zerosploits", "Exploits", "Payloads"],
+    ["Cheats", "Unlock-Alls", "Backdoors", "Hacking"],
+  ];
+  const clientWordSets = [
+    ["Creators", "Founders", "Startups"],
+    ["Teams", "Agencies", "Studios"],
+    ["Operators", "Researchers", "Enterprises"],
+  ];
+
+  if (!reducedMotion.matches) {
+    void runTypewriter(document.querySelector("[data-typewriter]"));
+
+    document.querySelectorAll("[data-headline-cycle]").forEach((element, index) => {
+      void runWordReel(element, headlineWordSets[index] || [], 4400 + index * 1250, 5900 + index * 430);
+    });
+
+    document.querySelectorAll("[data-solution-cycle]").forEach((element, index) => {
+      void runWordReel(element, solutionWordSets[index] || [], 1300 + index * 1350, 3500 + index * 520);
+    });
+
+    document.querySelectorAll("[data-client-cycle]").forEach((element, index) => {
+      void runWordReel(element, clientWordSets[index] || [], 3200 + index * 1900, 5400 + index * 650);
+    });
+  }
+
+  /* ---------------------------------------------------------
      Helper: identify external / real navigation anchors
      --------------------------------------------------------- */
   function isExternalOrRealNav(el) {
