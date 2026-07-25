@@ -55,7 +55,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
       if (reducedMotion.matches) break;
       element.classList.add("is-complete");
-      await motionDelay(3400);
+      await motionDelay(10000);
       element.classList.remove("is-complete");
 
       for (let index = target.length - 1; index >= 0; index -= 1) {
@@ -116,7 +116,7 @@ document.addEventListener("DOMContentLoaded", () => {
     void runTypewriter(document.querySelector("[data-typewriter]"));
 
     document.querySelectorAll("[data-headline-cycle]").forEach((element, index) => {
-      void runWordReel(element, headlineWordSets[index] || [], 4400 + index * 1250, 5900 + index * 430);
+      void runWordReel(element, headlineWordSets[index] || [], 1800 + index * 1400, 4200 + index * 500);
     });
 
     document.querySelectorAll("[data-solution-cycle]").forEach((element, index) => {
