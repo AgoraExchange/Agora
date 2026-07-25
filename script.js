@@ -95,11 +95,6 @@ document.addEventListener("DOMContentLoaded", () => {
     element.classList.remove("is-exiting", "is-entering");
   }
 
-  const headlineWordSets = [
-    ["websites", "software", "platforms", "dashboards"],
-    ["tools", "consoles", "modules", "automations"],
-    ["scripts", "systems", "workflows", "integrations"],
-  ];
   const solutionWordSets = [
     ["Web", "Software", "Games", "Coding", "Botnet"],
     ["Tools", "Tinkers", "Gadgets", "Modules", "Hacks"],
@@ -112,51 +107,8 @@ document.addEventListener("DOMContentLoaded", () => {
     ["Operators", "Researchers", "Enterprises"],
   ];
 
-  function lockHeadlineWordWidths() {
-    const headlineWords = document.querySelectorAll("[data-headline-cycle]");
-    if (!headlineWords.length) return;
-
-    const canvas = document.createElement("canvas");
-    const context = canvas.getContext("2d");
-    if (!context) return;
-
-    headlineWords.forEach((element, index) => {
-      const words = headlineWordSets[index] || [];
-      const styles = window.getComputedStyle(element);
-      const letterSpacing = Number.parseFloat(styles.letterSpacing) || 0;
-      context.font = [
-        styles.fontStyle,
-        styles.fontVariant,
-        styles.fontWeight,
-        styles.fontSize,
-        styles.fontFamily,
-      ].join(" ");
-
-      const widestWord = words.reduce((widest, word) => {
-        const measuredWidth =
-          context.measureText(word).width + Math.max(0, word.length - 1) * letterSpacing;
-        return Math.max(widest, measuredWidth);
-      }, 0);
-
-      element.style.width = `${Math.ceil(widestWord + 2)}px`;
-    });
-  }
-
   if (!reducedMotion.matches) {
-    lockHeadlineWordWidths();
-    document.fonts?.ready.then(lockHeadlineWordWidths);
-
-    let headlineResizeTimer = 0;
-    window.addEventListener("resize", () => {
-      window.clearTimeout(headlineResizeTimer);
-      headlineResizeTimer = window.setTimeout(lockHeadlineWordWidths, 120);
-    });
-
     void runTypewriter(document.querySelector("[data-typewriter]"));
-
-    document.querySelectorAll("[data-headline-cycle]").forEach((element, index) => {
-      void runWordReel(element, headlineWordSets[index] || [], 1800 + index * 1400, 4200 + index * 500);
-    });
 
     document.querySelectorAll("[data-solution-cycle]").forEach((element, index) => {
       void runWordReel(element, solutionWordSets[index] || [], 1300 + index * 1350, 3500 + index * 520);

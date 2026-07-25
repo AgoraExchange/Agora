@@ -412,11 +412,6 @@ body * {
   will-change: transform, opacity, filter;
 }
 
-.headline-cycle-word {
-  vertical-align: baseline;
-  white-space: nowrap;
-}
-
 .solution-cycle {
   font-size: clamp(16px, 1.45vw, 20px);
 }
