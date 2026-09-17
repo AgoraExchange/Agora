@@ -1299,6 +1299,19 @@ textarea {
   object-fit: cover;
   display: block;
   cursor: zoom-in;
+  transition:
+    transform 0.2s ease,
+    filter 0.2s ease;
+}
+
+.gallery-figure img:hover,
+.gallery-figure img:focus-visible {
+  filter: brightness(1.08) saturate(1.08);
+}
+
+.gallery-figure img:focus-visible {
+  outline: 2px solid #64ffda;
+  outline-offset: -4px;
 }
 
 .gallery-title {
@@ -1887,6 +1900,28 @@ body.image-lightbox-open {
     font-size: 0.75rem;
     padding: 0.3rem 0.7rem;
   }
+
+  .image-lightbox-stage {
+    align-items: flex-start;
+    padding: 4.75rem 0.75rem 1.5rem;
+  }
+
+  .image-lightbox-img {
+    max-width: 96vw;
+    max-height: none;
+  }
+
+  .image-lightbox-img.is-zoomed {
+    width: 190vw;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .gallery-figure img,
+  .image-lightbox-img,
+  .image-lightbox-close {
+    transition: none;
+  }
 }
 
 /* ==============================
@@ -2167,3 +2202,24 @@ body.image-lightbox-open {
   white-space: nowrap;
   border: 0;
 }
+
+/* Business invitation: a centered text link above the home content. */
+.view-home{padding-top:36px}
+.business-invitation{position:relative;max-width:800px;margin:0 auto 64px;text-align:center;isolation:isolate;opacity:var(--invitation-opacity,1);transform:translateY(var(--invitation-offset,0px))}
+.business-invitation::before{content:"";position:absolute;inset:-25px -25px;background:radial-gradient(ellipse,rgba(77,216,255,.10),transparent 68%);pointer-events:none;z-index:-1}
+.business-invitation-link{display:inline-flex;flex-direction:column;align-items:center;gap:12px;color:var(--text-main);text-decoration:none;padding:20px 28px;max-width:100%;border-radius:12px}
+.business-eyebrow{display:flex;align-items:center;justify-content:center;gap:9px;font:10px/1.5 ui-monospace,Consolas,monospace;letter-spacing:2.4px;color:var(--accent)}
+.business-beacon{width:6px;height:6px;flex-shrink:0;border-radius:50%;background:var(--accent);box-shadow:0 0 12px var(--accent);animation:business-beacon 3s ease-in-out infinite}
+.business-question{font-size:clamp(26px,3.3vw,43px);font-weight:600;line-height:1.15;letter-spacing:-1.4px;background:linear-gradient(110deg,#fff 20%,#91e9ff 42%,#fff 58%,#fff 80%);background-size:220% 100%;background-clip:text;-webkit-background-clip:text;color:transparent;animation:business-shimmer 7s ease-in-out infinite}
+.business-promise{font-size:13px;line-height:1.6;color:var(--text-dim)}
+.business-invitation-action{position:relative;color:var(--accent);font-size:13px;font-weight:600;line-height:1.6;padding:3px 0 8px;display:inline-flex;align-items:center;gap:12px}
+.business-invitation-action::after{content:"";position:absolute;bottom:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(77,216,255,.65),transparent);transition:box-shadow .25s,transform .25s;transform:scaleX(.8)}
+.business-invitation-action>span{transition:transform .25s}
+.business-invitation-link:hover .business-invitation-action>span{transform:translate(3px,-3px)}
+.business-invitation-link:hover .business-invitation-action::after{transform:scaleX(1);box-shadow:0 0 14px var(--accent)}
+.business-invitation-link:focus-visible{outline:2px solid var(--accent);outline-offset:6px}
+.business-invitation:focus-within{opacity:1;transform:none}
+@keyframes business-shimmer{0%,25%,100%{background-position:100% 0}65%{background-position:0 0}}
+@keyframes business-beacon{0%,100%{box-shadow:0 0 0 0 rgba(77,216,255,.15),0 0 9px rgba(77,216,255,.5)}50%{box-shadow:0 0 0 5px rgba(77,216,255,0),0 0 18px rgba(77,216,255,.8)}}
+@media(max-width:600px){.view-home{padding-top:20px}.business-invitation{margin-bottom:38px}.business-invitation-link{padding:15px 0;gap:11px}.business-eyebrow{font-size:8px;letter-spacing:1.5px}.business-question{letter-spacing:-.7px}.business-promise{font-size:12px;max-width:270px}.business-invitation-action{font-size:12px}}
+@media(prefers-reduced-motion:reduce){.business-question,.business-beacon{animation:none}.business-invitation{transform:none}.business-invitation-action::after,.business-invitation-action>span{transition:none}}
