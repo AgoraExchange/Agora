@@ -98,6 +98,9 @@
             <a class="business-invitation-link" href="local.html">
               <span class="business-invitation-action">Grow &amp; Automate Your Business <span aria-hidden="true">&#8599;</span></span>
             </a>
+            <button class="business-invitation-link" type="button" data-view="gallery" data-gallery-filter="everyday-tech">
+              <span class="business-invitation-action">Make Life Easier <span aria-hidden="true">&#8599;</span></span>
+            </button>
           </div>
           <div class="view-inner hero-layout">
             <div class="hero-main">
@@ -615,30 +618,60 @@
               <h2 class="view-title">Selected builds, tools, and hardware.</h2>
               <p class="view-subtitle">
                 Explore selected websites, software, hardware, APIs, and useful tools
-                built by Agora. Filter by discipline, then open a tool to see access details.
+                built by Agora. Browse by what helps you or by category, then select an item to learn more.
               </p>
             </header>
 
-            <div class="gallery-filters" role="tablist" aria-label="Filter gallery">
-              <button class="filter-btn is-active" type="button" data-filter="all">
+            <div class="gallery-filters" role="group" aria-label="Filter gallery">
+              <button class="filter-btn is-active" type="button" data-filter="all" aria-pressed="true">
                 All
               </button>
-              <button class="filter-btn" type="button" data-filter="software">
+              <button class="filter-btn" type="button" data-filter="everyday-tech" aria-pressed="false">
+                Everyday Tech
+              </button>
+              <button class="filter-btn" type="button" data-filter="software" aria-pressed="false">
                 Software
               </button>
-              <button class="filter-btn" type="button" data-filter="websites">
+              <button class="filter-btn" type="button" data-filter="websites" aria-pressed="false">
                 Websites
               </button>
-              <button class="filter-btn" type="button" data-filter="tinker">
+              <button class="filter-btn" type="button" data-filter="tinker" aria-pressed="false">
                 Tinker
               </button>
-              <button class="filter-btn" type="button" data-filter="tools">
+              <button class="filter-btn" type="button" data-filter="tools" aria-pressed="false">
                 Tools
               </button>
             </div>
 
+            <p class="everyday-tech-intro" id="everyday-tech-intro" hidden>
+              <strong>Everyday Tech. Small inventions. Everyday solutions.</strong>
+              Practical apps and clever tools designed to save time and make life easier.
+            </p>
             <div class="gallery-grid">
-              <!-- SOFTWARE ITEMS -->
+              <!-- SOFTWARE ITEMS: collections can overlap the primary category. -->
+              <article class="gallery-item" data-category="software" data-collections="everyday-tech" data-inquiry-focus="agora-vigilance">
+                <figure class="gallery-figure">
+                  <img src="photos/Software/agora-vigilance.png" alt="Agora Vigilance computer protection concept with malware scanning, protection controls, and quarantine" loading="lazy" width="1536" height="1024" />
+                </figure>
+                <h3 class="gallery-title">Agora Vigilance</h3>
+                <p class="gallery-desc">Computer protection, made simple. A security software concept bringing malware scans, real-time threat monitoring, suspicious-file quarantine, and clear alerts into one easy-to-use dashboard.</p>
+              </article>
+              <article class="gallery-item" data-category="software" data-collections="everyday-tech" data-inquiry-focus="agora-sniper">
+                <figure class="gallery-figure">
+                  <img src="photos/Software/agora-sniper.png" alt="Agora Sniper shopping automation concept with product drops, queue tracking, checkout preferences, ticket alerts, and listings" loading="lazy" width="1536" height="1024" />
+                </figure>
+                <h3 class="gallery-title">Agora Sniper</h3>
+                <p class="gallery-desc">Track the drop. Be ready. A shopping automation concept for release alerts, queue tracking, and automatic cart and checkout tasks on supported stores. Plan sneaker and retail drops, follow concert ticket alerts, and manage your own sale listings.</p>
+                <p class="gallery-product-note">Store support and availability vary. Purchases are not guaranteed.</p>
+              </article>
+              <article class="gallery-item" data-category="software" data-collections="everyday-tech" data-inquiry-focus="agora-scout">
+                <figure class="gallery-figure">
+                  <img src="photos/Software/agora-scout.png" alt="Agora Scout shopping assistant dashboard with AI search, hotel and boat rental comparisons, coupon checks, and price alerts" loading="lazy" width="1672" height="941" />
+                </figure>
+                <h3 class="gallery-title">Agora Scout</h3>
+                <p class="gallery-desc">Find better prices. Skip the searching. Designed to work in the background while you shop, Scout checks available coupons and promo codes and compares prices across supported sites. Ask Agora's built-in AI agent to find products, hotels, boat rentals, and more that fit your budget.</p>
+                <p class="gallery-product-note">Compare available offers, watch prices, and get deal alerts. Savings depend on dates, availability, fees, and offer eligibility.</p>
+              </article>
 <article class="gallery-item" data-category="software" data-inquiry-focus="agora-reviews">
                 <figure class="gallery-figure">
                   <img src="photos/Software/agora-reviews.png" alt="Agora Reviews dashboard concept with review-page connection, request scheduling, and customer response activity" loading="lazy" />
@@ -1142,6 +1175,9 @@
                     <select id="contact-focus" name="focus">
                       <option value="">Select an option</option>
                       <option value="agora-tap">Agora Tap / local business page</option>
+<option value="agora-vigilance">Agora Vigilance / computer protection</option>
+<option value="agora-sniper">Agora Sniper / shopping automation</option>
+<option value="agora-scout">Agora Scout / AI shopping assistant</option>
 <option value="agora-reviews">Agora Reviews / review automation</option>
                       <option value="business-website">Business website</option>
                       <option value="business-automation">Business automation / custom app</option>

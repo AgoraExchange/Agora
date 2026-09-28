@@ -270,6 +270,10 @@ document.addEventListener("DOMContentLoaded", () => {
       prefillContactFromSource(sourceEl);
     }
 
+    if (targetView === "gallery") {
+      applyGalleryFilter(sourceEl?.dataset.galleryFilter || "all");
+    }
+
     // Always scroll to top when switching views
     smoothScrollToTop();
   }
@@ -458,27 +462,35 @@ document.addEventListener("DOMContentLoaded", () => {
   const filterButtons = document.querySelectorAll(".filter-btn[data-filter]");
   const galleryItems = document.querySelectorAll(".gallery-item");
 
-  if (filterButtons.length && galleryItems.length) {
-    filterButtons.forEach((btn) => {
-      btn.addEventListener("click", () => {
-        const filter = btn.getAttribute("data-filter");
-
-        filterButtons.forEach((b) => b.classList.toggle("is-active", b === btn));
-
-        galleryItems.forEach((item) => {
-          const category = item.getAttribute("data-category");
-          const shouldShow = filter === "all" || category === filter;
-          item.classList.toggle("is-hidden", !shouldShow);
-        });
-
-        const gallerySection = document.querySelector(".view-gallery.is-active");
-        if (gallerySection) {
-          const top = gallerySection.offsetTop - 80;
-          window.scrollTo({ top, behavior: "smooth" });
-        }
-      });
+  function applyGalleryFilter(filter) {
+    const knownFilter = Array.from(filterButtons).some((button) => button.dataset.filter === filter);
+    const selected = knownFilter ? filter : "all";
+    filterButtons.forEach((button) => {
+      const active = button.dataset.filter === selected;
+      button.classList.toggle("is-active", active);
+      button.setAttribute("aria-pressed", String(active));
     });
+    galleryItems.forEach((item) => {
+      const categories = [item.dataset.category, ...(item.dataset.collections || "").split(/\s+/)];
+      const visible = selected === "all" || categories.includes(selected);
+      item.classList.toggle("is-hidden", !visible);
+      item.hidden = !visible;
+    });
+    const intro = document.getElementById("everyday-tech-intro");
+    if (intro) intro.hidden = selected !== "everyday-tech";
   }
+
+  filterButtons.forEach((button) => {
+    button.addEventListener("click", () => {
+      applyGalleryFilter(button.dataset.filter);
+      const gallerySection = document.querySelector(".view-gallery.is-active");
+      if (gallerySection) {
+        const top = gallerySection.offsetTop - 80;
+        const behavior = window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth";
+        window.scrollTo({ top, behavior });
+      }
+    });
+  });
 
   /* ---------------------------------------------------------
      Showcase image viewer and inquiry routing
@@ -1067,12 +1079,12 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   const showcaseTriggers = document.querySelectorAll(
-    '[data-view="showcase"], [data-view="gallery"]'
+    'button[data-view="showcase"], a[data-view="showcase"], button[data-view="gallery"], a[data-view="gallery"]'
   );
 
   showcaseTriggers.forEach((btn) => {
     btn.addEventListener("click", () => {
-      setTimeout(openShowcaseModalOnce, 600);
+      if (!btn.dataset.galleryFilter) setTimeout(openShowcaseModalOnce, 600);
     });
   });
 
