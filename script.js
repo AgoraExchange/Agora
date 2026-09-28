@@ -5,26 +5,6 @@
    ========================================================= */
 
 document.addEventListener("DOMContentLoaded", () => {
-  const invitation = document.getElementById("business-invitation");
-  if (invitation) {
-    let framePending = false;
-    const updateInvitation = () => {
-      framePending = false;
-      const headerBottom = document.querySelector(".site-header")?.getBoundingClientRect().bottom || 0;
-      const rect = invitation.getBoundingClientRect();
-      const progress = Math.min(1, Math.max(0, (headerBottom - rect.top) / Math.max(rect.height * 0.65, 1)));
-      invitation.style.setProperty("--invitation-opacity", String(1 - progress));
-      invitation.style.setProperty("--invitation-offset", (-progress * 10) + "px");
-      invitation.inert = progress >= 1;
-    };
-    const queueInvitationUpdate = () => {
-      if (!framePending) { framePending = true; requestAnimationFrame(updateInvitation); }
-    };
-    window.addEventListener("scroll", queueInvitationUpdate, { passive: true, capture: true });
-    window.addEventListener("resize", queueInvitationUpdate, { passive: true });
-    new MutationObserver(queueInvitationUpdate).observe(invitation.closest(".view"), { attributes: true, attributeFilter: ["class", "hidden"] });
-    queueInvitationUpdate();
-  }
   const navToggle = document.querySelector(".nav-toggle");
   const nav = document.querySelector(".site-nav");
   const navLinks = document.querySelectorAll(".nav-link");
@@ -302,11 +282,12 @@ document.addEventListener("DOMContentLoaded", () => {
     setActiveView("contact");
     const offer = new URLSearchParams(window.location.search).get("offer");
     const offers = {
-      analysis: ["agora-analysis", "I am interested in Agora Analysis (+$35/month). My existing Agora purchase or plan, business, audience, and campaign goals:"],
+      reviews: ["agora-reviews", "I am interested in Agora Reviews (+$35/month). My existing Agora purchase or plan, business, review-page link, and preferred request schedule:"],
       tap: ["agora-tap", "I'm interested in Agora Tap ($100 setup). My business name, links, and what customers should do next:"],
       website: ["business-website", "I'm interested in a business website. My current website and what I need:"],
       custom: ["business-automation", "I'd like help with a business workflow or custom app. Here's what I currently do manually:"],
     };
+    offers.analysis = offers.reviews; // Preserve existing inbound offer links.
     if (offers[offer]) {
       document.getElementById("contact-focus").value = offers[offer][0];
       document.getElementById("contact-message").value = offers[offer][1];
